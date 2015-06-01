@@ -1,6 +1,7 @@
 require 'rom/gateway'
 require 'rom/elasticsearch/dataset'
 require 'rom/elasticsearch/query_methods'
+require 'rom/elasticsearch/commands'
 require 'elasticsearch'
 require 'uri'
 
@@ -30,28 +31,6 @@ module ROM
     class Relation < ROM::Relation
       forward :with_options, :get
       forward *QueryMethods.public_instance_methods(false)
-    end
-
-    require 'rom/commands'
-    module Commands
-      class Create < ROM::Commands::Create
-        def execute(attributes)
-          validator.call(attributes)
-          result = dataset.index(attributes.to_h)
-          relation.get(result['_id'])
-        end
-
-        private
-        def dataset
-          relation.dataset
-        end
-      end
-
-      class Delete < ROM::Commands::Delete
-        def execute
-          relation.delete
-        end
-      end
     end
   end
 end
