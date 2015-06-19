@@ -1,12 +1,18 @@
-require 'spec_helper'
-
 describe 'integration' do
-  let(:gateway) { ROM::Elasticsearch::Gateway.from_uri('http://127.0.0.1:9200/rom-test') }
-  let(:setup) {
-    setup = ROM.setup(default: gateway)
+  let(:gateway)  { ROM::Elasticsearch::Gateway.new(db_options) }
+  let(:conn)     { gateway.connection }
+  let(:setup)    { ROM.setup(:elasticsearch, db_options) }
+  let(:rom)      { setup.finalize }
+  let(:users)    { rom.relation(:users) }
+  let(:commands) { rom.command(:users) }
+
+  before { reindex(conn) }
+  after  { drop_index(conn) }
+
+  before do
     setup.relation(:users) do
-      register_as(:users)
-      dataset(:users)
+      register_as :users
+      dataset :users
 
       def like(name)
         filter({match_all: {}}).query_string("username:#{name}")
@@ -14,32 +20,11 @@ describe 'integration' do
     end
 
     setup.commands(:users) do
-      define(:create)
+      define :create
     end
 
     setup
-  }
-
-  let(:rom) { setup.finalize }
-
-
-  before {
-    begin
-      if gateway.client.indices.exists?(index: 'users')
-        gateway.client.indices.delete(index: 'users')
-      end
-      gateway.client.indices.create(index: 'users')
-    rescue
-    end
-  }
-
-  after {
-    gateway.client.indices.delete(index: 'users')
-  }
-
-
-  let(:users) { rom.relation(:users) }
-  let(:commands) { rom.command(:users) }
+  end
 
   it 'creating records' do
     expect(users.to_a).to be_a(Array)
@@ -55,8 +40,8 @@ describe 'integration' do
     expect(array.size).to be(1)
     expect(array[0]['_id']).to eq(user_id.to_s)
 
+    refresh(conn)
 
-    sleep 1
     expect(users.like('kwando').to_a).not_to be_empty
   end
 

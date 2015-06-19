@@ -1,36 +1,35 @@
+require 'elasticsearch'
+require 'uri'
+
 require 'rom/gateway'
 require 'rom/elasticsearch/dataset'
 require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/commands'
-require 'elasticsearch'
-require 'uri'
 
 module ROM
   module Elasticsearch
     class Gateway < ROM::Gateway
-      def initialize(url, log: false)
-        url = URI.parse(url)
-        @client = ::Elasticsearch::Client.new(host: "#{url.host}:#{url.port || 9200}", log: log)
-        @index = url.path[1..-1]
+      attr_reader :index, :datasets
+
+      def initialize(options)
+        raise NoIndexProvidedError unless options.key?(:index)
+
+        @index = options[:index]
+        @connection = ::Elasticsearch::Client.new(options)
+        @datasets = {}
       end
 
-      def dataset(type)
-        Dataset.new(@client, index: @index, type: type)
+      def dataset(name)
+        datasets[name.to_s] = Dataset.new(connection, index: index, type: name)
       end
 
-      attr_reader :client
-
-      class << self
-        def from_uri(url)
-          new(url)
-        end
+      def [](name)
+        datasets[name.to_s]
       end
-    end
 
-
-    class Relation < ROM::Relation
-      forward :with_options, :get
-      forward *QueryMethods.public_instance_methods(false)
+      def dataset?(name)
+        connection.indices.exists(index: index)
+      end
     end
   end
 end

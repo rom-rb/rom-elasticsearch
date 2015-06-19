@@ -1,18 +1,18 @@
-require 'spec_helper'
-
 describe ROM::Elasticsearch::Dataset do
-  let(:client) { Elasticsearch::Client.new(log: false) }
-  let(:dataset) { ROM::Elasticsearch::Dataset.new(client, index: 'rom-test', type: 'users') }
+  let(:conn)    { Elasticsearch::Client.new(db_options) }
+  let(:dataset) { ROM::Elasticsearch::Dataset.new(conn, index: db_options[:index], type: 'users') }
 
+  before do
+    reindex(conn)
+    dataset.create(username: 'eve')
+    dataset.create(username: 'bob')
+    dataset.create(username: 'alice')
 
-  before {
-    dataset.delete_all
-    dataset.index(username: 'eve')
-    dataset.index(username: 'bob')
-    dataset.index(username: 'alice')
+    refresh(conn)
+  end
 
-    sleep 1 # let elasticsearch digest our documents..
-  }
+  after { drop_index(conn) }
+
   describe 'insert' do
     it 'works' do
       expect(dataset.with_options(size: 100).to_a.size).to eq(3)
@@ -27,13 +27,15 @@ describe ROM::Elasticsearch::Dataset do
                                   }
                               }).to_a
 
-      expect(result.map { |r| r['_source'] }).to match_array([{'username' => 'eve'}])
+      expect(result.size).to eq(1)
+      expect(result.first['username']).to eq('eve')
 
       result = dataset.query_string('username:nisse').to_a
       expect(result).to match_array([])
 
       result = dataset.query_string('username:alice').to_a
-      expect(result.map { |r| r['_source'] }).to match_array([{'username' => 'alice'}])
+      expect(result.size).to eq(1)
+      expect(result.first['username']).to eq('alice')
     end
   end
 
