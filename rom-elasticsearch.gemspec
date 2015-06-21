@@ -6,11 +6,11 @@ require 'rom/elasticsearch/version'
 Gem::Specification.new do |spec|
   spec.name          = 'rom-elasticsearch'
   spec.version       = Rom::Elasticsearch::VERSION
-  spec.authors       = ['Hannes Nevalainen']
-  spec.email         = ['hannes.nevalainen@me.com']
-  spec.summary       = %q{Experimental ROM adapter for Elasticsearch}
+  spec.authors       = ['Hannes Nevalainen', 'Yuri Artemev']
+  spec.email         = ['hannes.nevalainen@me.com', 'i@artemeff.com']
+  spec.summary       = %q{ROM adapter for Elasticsearch}
   spec.description   = %q{}
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/artemeff/rom-elasticsearch'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
