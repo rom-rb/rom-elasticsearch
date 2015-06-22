@@ -29,18 +29,18 @@ describe 'Commands / Updates' do
   end
 
   it 'has data' do
-    expect(element['name']).to eql('John')
-    expect(element['street']).to eql('Main Street')
+    expect(element[:name]).to eql('John')
+    expect(element[:street]).to eql('Main Street')
   end
 
   it 'partial updates on original data' do
     result = users.try do
-      users.update.get(element['_id']).call(street: '2nd Street')
+      users.update.get(element[:_id]).call(street: '2nd Street')
     end
 
     result = result.value.to_a.first
 
-    expect(result['name']).to eq('John')
-    expect(result['street']).to eq('2nd Street')
+    expect(result[:name]).to eq('John')
+    expect(result[:street]).to eq('2nd Street')
   end
 end

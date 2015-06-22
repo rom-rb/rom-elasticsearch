@@ -30,13 +30,13 @@ describe 'Commands / Delete' do
 
   it 'deletes all tuples in a restricted relation' do
     result = users.try do
-      users.delete.get(element['_id']).call
+      users.delete.get(element[:_id]).call
     end
 
     result = result.value
 
-    expect(result.first['name']).to eql('John')
-    expect(result.first['street']).to eql('Main Street')
+    expect(result.first[:name]).to eql('John')
+    expect(result.first[:street]).to eql('Main Street')
 
     refresh_index(conn)
 

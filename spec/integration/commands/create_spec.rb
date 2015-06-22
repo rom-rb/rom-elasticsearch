@@ -26,12 +26,12 @@ describe 'Commands / Create' do
     end
 
     result = result.value.to_a.first
-    expect(result['name']).to eql(data['name'])
-    expect(result['street']).to eql(data['street'])
+    expect(result[:name]).to eql(data['name'])
+    expect(result[:street]).to eql(data['street'])
 
     refresh_index(conn)
 
     result = rom.relation(:users).to_a.first
-    expect(result['name']).to eq('John Doe')
+    expect(result[:name]).to eq('John Doe')
   end
 end

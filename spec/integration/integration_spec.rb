@@ -13,7 +13,7 @@ describe 'integration' do
       attr_reader :name, :email
 
       def initialize(attrs)
-        @name, @email = attrs.values_at('name', 'email')
+        @name, @email = attrs.values_at(:name, :email)
       end
     end
 
@@ -58,7 +58,7 @@ describe 'integration' do
     it { expect(results).to be_an(ROM::Relation) }
     it { expect(results.to_a).to be_an(Array) }
     it { expect(results.to_a.count).to eq(1) }
-    it { expect(results.to_a.first['_id']).to eq(user_id.to_s) }
+    it { expect(results.to_a.first[:_id]).to eq(user_id.to_s) }
 
     it 'returns created record' do
       refresh_index(conn)

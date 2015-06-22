@@ -1,9 +1,10 @@
+require 'rom/elasticsearch/helpers'
 require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
     class Dataset
-      SERVICE_FIELDS = %w[_index _type _id _version].freeze
+      include Helpers
 
       attr_reader :client, :options
 
@@ -76,15 +77,8 @@ module ROM
           result = {}
           result.merge!(collect_service_fields(item))
           result.merge!(item['_source'])
+          deep_symbolize_keys(result)
         end
-      end
-
-      def collect_service_fields(item)
-        values = SERVICE_FIELDS.map do |field|
-          [field, item[field]]
-        end
-
-        Hash[values]
       end
 
       def with_options(new_options)

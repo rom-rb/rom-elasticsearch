@@ -26,7 +26,7 @@ describe ROM::Elasticsearch::Dataset do
       }).to_a
 
       expect(result.size).to eq(1)
-      expect(result.first['username']).to eq('eve')
+      expect(result.first[:username]).to eq('eve')
     end
 
     it '#query_string with unexist object' do
@@ -37,7 +37,7 @@ describe ROM::Elasticsearch::Dataset do
     it '#query_string with existent object' do
       result = dataset.query_string('username:alice').to_a
       expect(result.size).to eq(1)
-      expect(result.first['username']).to eq('alice')
+      expect(result.first[:username]).to eq('alice')
     end
   end
 
