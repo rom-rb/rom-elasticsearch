@@ -1,21 +1,31 @@
 describe 'integration' do
-  let(:gateway)  { ROM::Elasticsearch::Gateway.new(db_options) }
-  let(:conn)     { gateway.connection }
-  let(:setup)    { ROM.setup(:elasticsearch, db_options) }
-  let(:rom)      { setup.finalize }
-  let(:users)    { rom.relation(:users) }
-  let(:commands) { rom.command(:users) }
+  let(:gateway) { ROM::Elasticsearch::Gateway.new(db_options) }
+  let(:conn)    { gateway.connection }
+  let(:setup)   { ROM.setup(:elasticsearch, db_options) }
+  let(:rom)     { setup.finalize }
+  let(:user_id) { 3289 }
+  let(:data)    { Hash[name: 'kwando', email: 'hannes@bemt.nu'] }
 
-  before { reindex(conn) }
-  after  { drop_index(conn) }
+  before { create_index(conn) }
 
   before do
+    class User
+      attr_reader :name, :email
+
+      def initialize(attrs)
+        @name, @email = attrs.values_at('name', 'email')
+      end
+    end
+
     setup.relation(:users) do
       register_as :users
       dataset :users
+    end
 
-      def like(name)
-        filter({match_all: {}}).query_string("username:#{name}")
+    setup.mappers do
+      define(:users) do
+        model User
+        register_as :entity
       end
     end
 
@@ -26,25 +36,36 @@ describe 'integration' do
     setup
   end
 
-  it 'creating records' do
-    expect(users.to_a).to be_a(Array)
+  context 'relation :users' do
+    let(:users) { rom.relation(:users) }
 
-    user_id = 3289
+    before do
+      rom.commands.users.create.call(data)
+      refresh_index(conn)
+    end
 
-    result = commands.create.with_options(id: user_id).call(username: 'kwando', email: 'hannes@bemt.nu')
-
-    expect(result).to be_a_kind_of(ROM::Relation)
-
-    array = result.to_a
-    expect(array).to be_a_kind_of(Array)
-    expect(array.size).to be(1)
-    expect(array[0]['_id']).to eq(user_id.to_s)
-
-    refresh(conn)
-
-    expect(users.like('kwando').to_a).not_to be_empty
+    it { expect(users.to_a).to be_an(Array) }
+    it { expect(users.as(:entity).to_a).to be_an(Array) }
+    it { expect(users.as(:entity).to_a.first).to be_an(User) }
+    it { expect(users.as(:entity).to_a.first.name).to eq(data[:name]) }
+    it { expect(users.as(:entity).to_a.first.email).to eq(data[:email]) }
   end
 
+  context 'command :users' do
+    let(:users)   { rom.command(:users) }
+    let!(:results) { users.create.get(user_id).call(data) }
+
+    it { expect(results).to be_an(ROM::Relation) }
+    it { expect(results.to_a).to be_an(Array) }
+    it { expect(results.to_a.count).to eq(1) }
+    it { expect(results.to_a.first['_id']).to eq(user_id.to_s) }
+
+    it 'returns created record' do
+      refresh_index(conn)
+
+      expect(rom.relations.users.to_a.size).to eq(1)
+    end
+  end
 
   describe 'sanity checks' do
     it 'is a ROM::Gateway' do

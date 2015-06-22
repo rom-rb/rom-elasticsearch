@@ -1,10 +1,9 @@
-require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
     class Dataset
-      include QueryMethods
+      SERVICE_FIELDS = %w[_index _type _id _version].freeze
 
       attr_reader :client, :options
 
@@ -12,9 +11,11 @@ module ROM
         @client, @options = client, options
       end
 
-      def create(data)
+      def insert(data)
         client.index(options.merge(body: data))
       end
+
+      alias_method :<<, :insert
 
       def update(data, id = options[:id])
         client.update(options.merge(id: id, body: {doc: data}))
@@ -24,12 +25,32 @@ module ROM
         client.delete(options.merge(id: id))
       end
 
-      def delete_all
-        client.delete_by_query(options.merge(body: {query: {match_all: {}}}))
+      def delete_by(query)
+        client.delete_by_query(options.merge(body: {query: query}))
       end
 
-      def with_options(new_opts)
-        Dataset.new(client, options.merge(new_opts))
+      def delete_all
+        delete_by(match_all: {})
+      end
+
+      def search(options)
+        with_options(options)
+      end
+
+      def get(id = options[:id])
+        with_options(options.merge(id: id))
+      end
+
+      def filter(filter)
+        with_options(body: options.fetch(:body, {}).merge(filter: filter))
+      end
+
+      def query(query)
+        with_options(body: options.fetch(:body, {}).merge(query: query))
+      end
+
+      def query_string(expression)
+        query(query_string: {query: expression})
       end
 
       def to_a
@@ -43,19 +64,31 @@ module ROM
       end
 
     private
-    
+
       def view
         results = if options[:id]
-          [Hash[client.get(options)]] # TODO Figure out why the [Hash[result]] part i s needed
+          [client.get(options)]
         else
           client.search(options).fetch('hits').fetch('hits')
         end
 
-        results.map do |result|
-          result = result.merge(result['_source'])
-          result.delete('_source')
-          result
+        results.map do |item|
+          result = {}
+          result.merge!(collect_service_fields(item))
+          result.merge!(item['_source'])
         end
+      end
+
+      def collect_service_fields(item)
+        values = SERVICE_FIELDS.map do |field|
+          [field, item[field]]
+        end
+
+        Hash[values]
+      end
+
+      def with_options(new_options)
+        self.class.new(client, options.merge(new_options))
       end
     end
   end

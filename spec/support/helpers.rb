@@ -5,26 +5,16 @@ module Helpers
     {url: 'http://localhost:9200', index: INDEX}
   end
 
-  def reindex(connection)
+  def create_index(connection)
     if connection.indices.exists?(index: INDEX)
-      connection.indices.delete(index: INDEX)
+      connection.delete_by_query(index: INDEX, body: {query: {match_all: {}}})
+    else
+      connection.indices.create(index: INDEX)
     end
-    connection.indices.create(index: INDEX)
   rescue
   end
 
-  def drop_index(connection)
-    connection.indices.delete(index: INDEX)
-  rescue
-  end
-
-  def refresh(connection)
+  def refresh_index(connection)
     connection.indices.refresh(index: INDEX)
-  end
-
-  def create_database(name)
-  end
-
-  def drop_database(name)
   end
 end

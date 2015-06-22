@@ -1,9 +1,7 @@
 require 'elasticsearch'
-require 'uri'
 
 require 'rom/gateway'
 require 'rom/elasticsearch/dataset'
-require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/commands'
 
 module ROM
@@ -19,12 +17,12 @@ module ROM
         @datasets = {}
       end
 
-      def dataset(name)
-        datasets[name.to_s] = Dataset.new(connection, index: index, type: name)
-      end
-
       def [](name)
         datasets[name.to_s]
+      end
+
+      def dataset(name)
+        datasets[name.to_s] = Dataset.new(connection, index: index, type: name)
       end
 
       def dataset?(name)

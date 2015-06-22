@@ -1,11 +1,10 @@
 require 'rom/relation'
-require 'rom/elasticsearch/query_methods'
 
 module ROM
   module Elasticsearch
     class Relation < ROM::Relation
-      forward :with_options, :get
-      forward *QueryMethods.public_instance_methods(false)
+      forward :<<, :insert
+      forward :get, :filter, :query_string, :query
     end
   end
 end
