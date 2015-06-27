@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['hannes.nevalainen@me.com', 'i@artemeff.com']
   spec.summary       = %q{ROM adapter for Elasticsearch}
   spec.description   = %q{}
-  spec.homepage      = 'https://github.com/artemeff/rom-elasticsearch'
+  spec.homepage      = 'https://github.com/rom-rb'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
