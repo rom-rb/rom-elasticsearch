@@ -50,6 +50,10 @@ module ROM
         with_options(body: options.fetch(:body, {}).merge(query: query))
       end
 
+      def sort(sort)
+        with_options(body: options.fetch(:body, {}).merge(sort: sort))
+      end
+
       def query_string(expression)
         query(query_string: {query: expression})
       end
