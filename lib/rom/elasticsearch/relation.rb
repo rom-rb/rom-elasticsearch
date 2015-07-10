@@ -5,7 +5,7 @@ module ROM
     class Relation < ROM::Relation
       forward :search
       forward :<<, :insert
-      forward :get, :filter, :query_string, :query
+      forward :get, :filter, :sort, :query_string, :query
     end
   end
 end
