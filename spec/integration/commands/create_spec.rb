@@ -16,7 +16,9 @@ describe 'Commands / Create' do
     end
 
     setup.commands(:users) do
-      define :create
+      define(:create) do
+        input ->(attrs) { attrs.merge('street' => attrs['street'].upcase) }
+      end
     end
   end
 
@@ -27,7 +29,7 @@ describe 'Commands / Create' do
 
     result = result.value.to_a.first
     expect(result[:name]).to eql(data['name'])
-    expect(result[:street]).to eql(data['street'])
+    expect(result[:street]).to eql('MAIN STREET')
 
     refresh_index(conn)
 

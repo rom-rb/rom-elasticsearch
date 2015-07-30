@@ -4,7 +4,8 @@ module ROM
   module Elasticsearch
     class Commands
       class Create < ROM::Commands::Create
-        def execute(attributes)
+        def execute(tuple)
+          attributes = input[tuple]
           validator.call(attributes)
           result = relation.dataset.insert(attributes.to_h)
           relation.get(result['_id'])
@@ -12,7 +13,8 @@ module ROM
       end
 
       class Update < ROM::Commands::Update
-        def execute(attributes)
+        def execute(tuple)
+          attributes = input[tuple]
           validator.call(attributes)
           result = relation.dataset.update(attributes.to_h)
           relation.get(result['_id'])
