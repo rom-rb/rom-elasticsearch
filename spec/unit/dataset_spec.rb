@@ -12,7 +12,21 @@ describe ROM::Elasticsearch::Dataset do
     refresh_index(conn)
   end
 
-  describe 'query inserted objects' do
+  context 'bulk query' do
+    it 'use index and type from dataset options' do
+      expect(conn).to receive(:bulk)
+        .with(index: 'rom-test', type: 'users',
+          body: [{:index=>{:data=>{:title=>"foo"}}},
+                 {:index=>{:data=>{:title=>"bar"}}}])
+
+      dataset.bulk([
+        {index: {data: {title: 'foo'}}},
+        {index: {data: {title: 'bar'}}}
+      ])
+    end
+  end
+
+  context 'query inserted objects' do
     it { expect(dataset.search(size: 100).to_a.size).to eq(3) }
     it { expect(dataset.search(size: 2).to_a.size).to eq(2) }
 
@@ -41,7 +55,7 @@ describe ROM::Elasticsearch::Dataset do
     end
   end
 
-  describe 'objects deletion' do
+  context 'objects deletion' do
     it 'works' do
       expect(dataset.to_a.size).to eq(3)
       dataset.delete_all

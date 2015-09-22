@@ -12,6 +12,10 @@ module ROM
         @client, @options = client, options
       end
 
+      def bulk(data, custom_options = {})
+        client.bulk(options.merge(body: data).merge(custom_options))
+      end
+
       def insert(data)
         client.index(options.merge(body: data))
       end

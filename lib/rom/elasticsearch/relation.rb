@@ -4,7 +4,7 @@ module ROM
   module Elasticsearch
     class Relation < ROM::Relation
       forward :search
-      forward :<<, :insert
+      forward :<<, :insert, :bulk
       forward :get, :filter, :sort, :query_string, :query
     end
   end
