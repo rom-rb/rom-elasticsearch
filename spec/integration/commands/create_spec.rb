@@ -1,21 +1,27 @@
 describe 'Commands / Create' do
-  let(:setup)   { ROM.setup(:elasticsearch, db_options) }
   let(:gateway) { ROM::Elasticsearch::Gateway.new(db_options) }
   let(:conn)    { gateway.connection }
 
-  let(:rom)     { setup.finalize }
+  let!(:env) do
+    env = ROM::Environment.new
+    env.setup(:elasticsearch, db_options)
+    env.use :auto_registration
+    env
+  end
+
+  let(:rom)     { env.finalize.env }
   let(:users)   { rom.command(:users) }
   let(:data)    { Hash['name' => 'John Doe', 'street' => 'Main Street'] }
 
   before { create_index(conn) }
 
   before do
-    setup.relation(:users) do
+    env.relation(:users) do
       register_as :users
       dataset :users
     end
 
-    setup.commands(:users) do
+    env.commands(:users) do
       define(:create) do
         input ->(attrs) { attrs.merge('street' => attrs['street'].upcase) }
       end

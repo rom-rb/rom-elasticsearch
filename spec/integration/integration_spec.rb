@@ -1,8 +1,15 @@
 describe 'integration' do
   let(:gateway) { ROM::Elasticsearch::Gateway.new(db_options) }
   let(:conn)    { gateway.connection }
-  let(:setup)   { ROM.setup(:elasticsearch, db_options) }
-  let(:rom)     { setup.finalize }
+
+  let!(:env) do
+    env = ROM::Environment.new
+    env.setup(:elasticsearch, db_options)
+    env.use :auto_registration
+    env
+  end
+
+  let(:rom)     { env.finalize.env }
   let(:user_id) { 3289 }
   let(:data)    { Hash[name: 'kwando', email: 'hannes@bemt.nu'] }
 
@@ -17,23 +24,21 @@ describe 'integration' do
       end
     end
 
-    setup.relation(:users) do
+    env.relation(:users) do
       register_as :users
       dataset :users
     end
 
-    setup.mappers do
+    env.mappers do
       define(:users) do
         model User
         register_as :entity
       end
     end
 
-    setup.commands(:users) do
+    env.commands(:users) do
       define :create
     end
-
-    setup
   end
 
   context 'relation :users' do
