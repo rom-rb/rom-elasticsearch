@@ -1,47 +1,64 @@
-require 'spec_helper'
-
 describe ROM::Elasticsearch::Dataset do
-  let(:client) { Elasticsearch::Client.new(log: false) }
-  let(:dataset) { ROM::Elasticsearch::Dataset.new(client, index: 'rom-test', type: 'users') }
+  let(:conn)    { Elasticsearch::Client.new(db_options) }
+  let(:dataset) { ROM::Elasticsearch::Dataset.new(conn, index: db_options[:index], type: 'users') }
 
+  before do
+    create_index(conn)
 
-  before {
-    dataset.delete_all
-    dataset.index(username: 'eve')
-    dataset.index(username: 'bob')
-    dataset.index(username: 'alice')
+    dataset.insert(username: 'eve')
+    dataset.insert(username: 'bob')
+    dataset.insert(username: 'alice')
 
-    sleep 1 # let elasticsearch digest our documents..
-  }
-  describe 'insert' do
-    it 'works' do
-      expect(dataset.with_options(size: 100).to_a.size).to eq(3)
+    refresh_index(conn)
+  end
 
-      expect(dataset.with_options(size: 2).to_a.size).to eq(2)
+  context 'bulk query' do
+    it 'use index and type from dataset options' do
+      expect(conn).to receive(:bulk)
+        .with(index: 'rom-test', type: 'users',
+          body: [{:index=>{:data=>{:title=>"foo"}}},
+                 {:index=>{:data=>{:title=>"bar"}}}])
 
-      result = dataset.search(body: {
-                                  query: {
-                                      query_string: {
-                                          query: 'username:eve'
-                                      }
-                                  }
-                              }).to_a
-
-      expect(result.map { |r| r['_source'] }).to match_array([{'username' => 'eve'}])
-
-      result = dataset.query_string('username:nisse').to_a
-      expect(result).to match_array([])
-
-      result = dataset.query_string('username:alice').to_a
-      expect(result.map { |r| r['_source'] }).to match_array([{'username' => 'alice'}])
+      dataset.bulk([
+        {index: {data: {title: 'foo'}}},
+        {index: {data: {title: 'bar'}}}
+      ])
     end
   end
 
-  describe 'delete' do
+  context 'query inserted objects' do
+    it { expect(dataset.search(size: 100).to_a.size).to eq(3) }
+    it { expect(dataset.search(size: 2).to_a.size).to eq(2) }
+
+    it '#search' do
+      result = dataset.search(body: {
+        query: {
+          query_string: {
+            query: 'username:eve'
+          }
+        }
+      }).to_a
+
+      expect(result.size).to eq(1)
+      expect(result.first[:username]).to eq('eve')
+    end
+
+    it '#query_string with unexist object' do
+      result = dataset.query_string('username:nisse').to_a
+      expect(result).to match_array([])
+    end
+
+    it '#query_string with existent object' do
+      result = dataset.query_string('username:alice').to_a
+      expect(result.size).to eq(1)
+      expect(result.first[:username]).to eq('alice')
+    end
+  end
+
+  context 'objects deletion' do
     it 'works' do
       expect(dataset.to_a.size).to eq(3)
       dataset.delete_all
-
       expect(dataset.to_a.size).to eq(0)
     end
   end

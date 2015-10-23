@@ -1,45 +1,65 @@
-require 'rom/elasticsearch/query_methods'
+require 'rom/elasticsearch/helpers'
+require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
-    class Error < StandardError
-      def initialize(wrapped_error)
-        super(wrapped_error.message)
-        @wrapped_error = wrapped_error
-      end
-
-      attr_reader :wrapped_error
-    end
-    class SearchError < Error
-      def initialize(wrapped_error, query)
-        super(wrapped_error)
-        @query = query
-      end
-
-      attr_reader :query
-    end
     class Dataset
+      include Helpers
+
+      attr_reader :client, :options
+
       def initialize(client, options)
-        @client = client
-        @options = options
+        @client, @options = client, options
       end
 
-      include QueryMethods
+      def bulk(data, custom_options = {})
+        client.bulk(options.merge(body: data).merge(custom_options))
+      end
 
-      def index(data)
+      def insert(data)
         client.index(options.merge(body: data))
       end
 
-      def with_options(new_opts)
-        Dataset.new(@client, options.merge(new_opts))
+      alias_method :<<, :insert
+
+      def update(data, id = options[:id])
+        client.update(options.merge(id: id, body: {doc: data}))
       end
 
       def delete(id = options[:id])
         client.delete(options.merge(id: id))
       end
 
+      def delete_by(query)
+        client.delete_by_query(options.merge(body: {query: query}))
+      end
+
       def delete_all
-        client.delete_by_query(options.merge(body: {query: {match_all: {}}}))
+        delete_by(match_all: {})
+      end
+
+      def search(options)
+        with_options(options)
+      end
+
+      def get(id = options[:id])
+        with_options(options.merge(id: id))
+      end
+
+      def filter(filter)
+        with_options(body: options.fetch(:body, {}).merge(filter: filter))
+      end
+
+      def query(query)
+        with_options(body: options.fetch(:body, {}).merge(query: query))
+      end
+
+      def sort(sort)
+        with_options(body: options.fetch(:body, {}).merge(sort: sort))
+      end
+
+      def query_string(expression)
+        query(query_string: {query: expression})
       end
 
       def to_a
@@ -52,18 +72,26 @@ module ROM
         raise SearchError.new(ex, options)
       end
 
-      attr_reader :client
+    private
 
-      private
       def view
-        if options[:id]
-          [Hash[client.get(options)]] # TODO Figure out why the [Hash[result]] part i s needed
+        results = if options[:id]
+          [client.get(options)]
         else
           client.search(options).fetch('hits').fetch('hits')
         end
+
+        results.map do |item|
+          result = {}
+          result.merge!(collect_service_fields(item))
+          result.merge!(item['_source'])
+          deep_symbolize_keys(result)
+        end
       end
 
-      attr_reader :options
+      def with_options(new_options)
+        self.class.new(client, options.merge(new_options))
+      end
     end
   end
 end
