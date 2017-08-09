@@ -5,7 +5,6 @@ module ROM
     class Commands
       class Create < ROM::Commands::Create
         def execute(attributes)
-          validator.call(attributes)
           result = dataset.index(attributes.to_h)
           relation.get(result['_id'])
         end

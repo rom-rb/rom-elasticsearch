@@ -11,7 +11,7 @@ describe ROM::Elasticsearch::Dataset do
     dataset.index(username: 'bob')
     dataset.index(username: 'alice')
 
-    sleep 1 # let elasticsearch digest our documents..
+    sleep 2 # let elasticsearch digest our documents..
   }
   describe 'insert' do
     it 'works' do
@@ -42,6 +42,7 @@ describe ROM::Elasticsearch::Dataset do
       expect(dataset.to_a.size).to eq(3)
       dataset.delete_all
 
+      sleep 2
       expect(dataset.to_a.size).to eq(0)
     end
   end

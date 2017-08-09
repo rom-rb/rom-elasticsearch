@@ -21,14 +21,16 @@ module ROM
       attr_reader :client
 
       class << self
-        def from_uri(url)
-          new(url)
+        def from_uri(url, **options)
+          new(url, options)
         end
       end
     end
 
 
     class Relation < ROM::Relation
+      adapter :elasticsearch
+
       forward :with_options, :get
       forward *QueryMethods.public_instance_methods(false)
     end

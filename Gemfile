@@ -3,4 +3,12 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in rom-elasticsearch.gemspec
 gemspec
 
-gem 'rom', github: 'rom-rb/rom'
+gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
+  gem 'rom-core'
+  gem 'rom-mapper'
+end
+
+gem 'dry-types', git: 'https://github.com/dry-rb/dry-types.git'
+
+gem 'pry-byebug', platform: :mri
+gem 'pry', platform: :jruby
