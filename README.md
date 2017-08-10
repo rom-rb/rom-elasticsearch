@@ -1,6 +1,10 @@
-# Rom::Elasticsearch
+[travis]: https://travis-ci.org/rom-rb/rom-elasticsearch
 
-Experimental Elasticsearch adapter for ROM.
+# rom-elasticsearch
+
+[![Build Status](https://travis-ci.org/rom-rb/rom-elasticsearch.svg?branch=master)][travis]
+
+Experimental Elasticsearch adapter for [rom-rb](https://github.com/rom-rb/rom).
 
 ## Installation
 
@@ -22,7 +26,7 @@ TODO: Write usage instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/rom-elasticsearch/fork )
+1. Fork it ( https://github.com/rom-rb/rom-elasticsearch/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
