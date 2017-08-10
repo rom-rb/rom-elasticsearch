@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ROM::Elasticsearch::Dataset do
+RSpec.describe ROM::Elasticsearch::Dataset do
   let(:client) { Elasticsearch::Client.new(log: false) }
   let(:dataset) { ROM::Elasticsearch::Dataset.new(client, index: 'rom-test', type: 'users') }
 

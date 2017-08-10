@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'integration' do
+RSpec.describe 'integration' do
   let(:gateway) { ROM::Elasticsearch::Gateway.from_uri('http://127.0.0.1:9200/rom-test') }
   let(:conf) {
     conf = ROM::Configuration.new(default: gateway)

@@ -31,8 +31,8 @@ module ROM
     class Relation < ROM::Relation
       adapter :elasticsearch
 
-      forward :with_options, :get
-      forward *QueryMethods.public_instance_methods(false)
+      forward :with_options
+      forward(*QueryMethods.public_instance_methods(false))
     end
   end
 end
