@@ -20,19 +20,18 @@ RSpec.describe 'integration' do
   }
 
   after {
-    gateway['user'].delete_all
+    gateway['user'].wait.delete_all
   }
 
 
   let(:users) { container.relations[:users] }
-  let(:commands) { container.commands[:users] }
 
   it 'creating records' do
     expect(users.to_a).to be_a(Array)
 
     user_id = 3289
 
-    result = commands.create.(id: user_id, username: 'kwando', email: 'hannes@bemt.nu')
+    result = commands[:users].create.(id: user_id, username: 'kwando', email: 'hannes@bemt.nu')
 
     expect(result).to be_a(Hash)
     expect(result).
