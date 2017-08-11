@@ -10,6 +10,7 @@ module ROM
 
       attr_reader :wrapped_error
     end
+
     class SearchError < Error
       def initialize(wrapped_error, query)
         super(wrapped_error)
@@ -18,28 +19,29 @@ module ROM
 
       attr_reader :query
     end
+
     class Dataset
-      def initialize(client, options)
-        @client = client
-        @options = options
-      end
+      extend Initializer
+
+      ALL = { query: { match_all: EMPTY_HASH } }.freeze
+
+      param :client
+
+      option :params, optional: true, default: -> { EMPTY_HASH }
+      option :body, optional: true, default: -> { EMPTY_HASH }
 
       include QueryMethods
 
-      def index(data)
-        client.index(options.merge(body: data))
+      def put(data)
+        client.index(**params, body: data)
       end
 
-      def with_options(new_opts)
-        Dataset.new(@client, options.merge(new_opts))
-      end
-
-      def delete(id = options[:id])
-        client.delete(options.merge(id: id))
+      def delete(id = params[:id])
+        client.delete(id)
       end
 
       def delete_all
-        client.delete_by_query(options.merge(body: {query: {match_all: {}}}))
+        client.delete_by_query(**params, body: body.merge(ALL))
       end
 
       def to_a
@@ -52,18 +54,46 @@ module ROM
         raise SearchError.new(ex, options)
       end
 
+      def type
+        params[:type]
+      end
+
+      def index
+        params[:index]
+      end
+
       attr_reader :client
 
-      private
-      def view
-        if options[:id]
-          [Hash[client.get(options)]] # TODO Figure out why the [Hash[result]] part i s needed
+      def body(new = EMPTY_HASH)
+        if new.empty?
+          @body
         else
-          client.search(options).fetch('hits').fetch('hits')
+          with(body: body.merge(new))
         end
       end
 
-      attr_reader :options
+      def params(new = EMPTY_HASH)
+        if new.empty?
+          @params
+        else
+          with(params: params.merge(new))
+        end
+      end
+
+      def wait
+        params(refresh: 'wait_for')
+      end
+
+
+      private
+
+      def view
+        if params[:id]
+          [Hash[client.get(params)]] # TODO Figure out why the [Hash[result]] part i s needed
+        else
+          client.search(**params, body: body).fetch('hits').fetch('hits')
+        end
+      end
     end
   end
 end

@@ -5,11 +5,12 @@ module ROM
     class Commands
       class Create < ROM::Commands::Create
         def execute(attributes)
-          result = dataset.index(attributes.to_h)
-          relation.get(result['_id'])
+          result = dataset.put(attributes.to_h)
+          relation.get(result['_id']).one['_source']
         end
 
         private
+
         def dataset
           relation.dataset
         end
