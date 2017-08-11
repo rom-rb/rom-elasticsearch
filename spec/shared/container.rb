@@ -5,4 +5,7 @@ RSpec.shared_context 'container' do
   let(:container) { ROM.container(conf) }
 
   let(:gateway) { conf.gateways[:default] }
+
+  let(:relations) { container[:relations] }
+  let(:commands) { container[:commands] }
 end

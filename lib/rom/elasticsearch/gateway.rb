@@ -1,7 +1,9 @@
 require 'rom/gateway'
 require 'rom/elasticsearch/dataset'
+require 'rom/elasticsearch/relation'
 require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/commands'
+require 'dry/core/inflector'
 require 'elasticsearch'
 require 'uri'
 
@@ -30,7 +32,7 @@ module ROM
       alias_method :index?, :dataset?
 
       def [](type)
-        root.params(type: type)
+        root.params(type: Dry::Core::Inflector.singularize(type))
       end
       alias_method :dataset, :[]
 
@@ -41,17 +43,6 @@ module ROM
       def create_index(name)
         client.indices.create(index: name)
       end
-    end
-
-    class Relation < ROM::Relation
-      adapter :elasticsearch
-
-      defines :index
-
-      dataset { index ? with(params: { index: index }) : self }
-
-      forward :with_options
-      forward(*QueryMethods.public_instance_methods(false))
     end
   end
 end

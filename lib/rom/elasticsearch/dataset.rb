@@ -84,7 +84,6 @@ module ROM
         params(refresh: 'wait_for')
       end
 
-
       private
 
       def view
