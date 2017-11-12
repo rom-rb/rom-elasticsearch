@@ -1,11 +1,9 @@
-require 'rom/gateway'
-require 'rom/elasticsearch/dataset'
-require 'rom/elasticsearch/relation'
-require 'rom/elasticsearch/query_methods'
-require 'rom/elasticsearch/commands'
 require 'dry/core/inflector'
 require 'elasticsearch'
 require 'uri'
+
+require 'rom/gateway'
+require 'rom/elasticsearch/dataset'
 
 module ROM
   module Elasticsearch

@@ -1,4 +1,5 @@
-require 'rom/types'
+require 'rom/relation'
+require 'rom/elasticsearch/query_methods'
 
 module ROM
   module Elasticsearch
