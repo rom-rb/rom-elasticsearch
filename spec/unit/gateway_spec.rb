@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 require 'rom/lint/spec'
 
 RSpec.describe ROM::Elasticsearch::Gateway do

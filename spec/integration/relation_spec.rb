@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe ROM::Elasticsearch::Relation do
   include_context 'container'
 
