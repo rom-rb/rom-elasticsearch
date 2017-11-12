@@ -37,12 +37,6 @@ module ROM
     #
     # @api public
     class Gateway < ROM::Gateway
-      class << self
-        def from_uri(url, **options)
-          new(url, options)
-        end
-      end
-
       adapter :elasticsearch
 
       # @!attribute [r] client
