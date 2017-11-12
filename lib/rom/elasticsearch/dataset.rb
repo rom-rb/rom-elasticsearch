@@ -87,8 +87,6 @@ module ROM
         params[:index]
       end
 
-      attr_reader :client
-
       # Return a new dataset with new body
       #
       # @param [Hash] new New body data
