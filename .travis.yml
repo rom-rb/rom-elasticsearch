@@ -1,13 +1,11 @@
 language: ruby
-dist: trusty
-sudo: required
+sudo: false
 cache: bundler
 services:
   - elasticsearch
 bundler_args: --without yard guard benchmarks tools
 before_script:
   - curl -XPUT http://localhost:9200/rom-test
-  - rvm get master
 script: "bundle exec rake ci"
 rvm:
   - 2.3.4
