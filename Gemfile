@@ -8,7 +8,5 @@ gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
   gem 'rom-mapper'
 end
 
-gem 'dry-types', git: 'https://github.com/dry-rb/dry-types.git'
-
 gem 'pry-byebug', platform: :mri
 gem 'pry', platform: :jruby
