@@ -1,16 +1,31 @@
+[gem]: https://rubygems.org/gems/rom-elasticsearch
 [travis]: https://travis-ci.org/rom-rb/rom-elasticsearch
+[gemnasium]: https://gemnasium.com/rom-rb/rom-elasticsearch
+[codeclimate]: https://codeclimate.com/github/rom-rb/rom-elasticsearch
+[inchpages]: http://inch-ci.org/github/rom-rb/rom-elasticsearch
 
 # rom-elasticsearch
 
+[![Gem Version](https://badge.fury.io/rb/rom-elasticsearch.svg)][gem]
 [![Build Status](https://travis-ci.org/rom-rb/rom-elasticsearch.svg?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/rom-rb/rom-elasticsearch.svg)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/gpa.svg)][codeclimate]
+[![Test Coverage](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/coverage.svg)][codeclimate]
+[![Inline docs](http://inch-ci.org/github/rom-rb/rom-elasticsearch.svg?branch=master)][inchpages]
 
-Experimental Elasticsearch adapter for [rom-rb](https://github.com/rom-rb/rom).
+ElasticSearch support for [rom-rb](https://github.com/rom-rb/rom).
+
+Resources:
+
+- [API Documentation](http://api.rom-rb.org/rom-elasticsearch)
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'rom-elasticsearch'
+```ruby
+gem 'rom-elasticsearch'
+```
 
 And then execute:
 
@@ -20,14 +35,6 @@ Or install it yourself as:
 
     $ gem install rom-elasticsearch
 
-## Usage
+## License
 
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/rom-rb/rom-elasticsearch/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+See `LICENSE` file.
