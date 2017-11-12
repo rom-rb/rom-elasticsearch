@@ -20,13 +20,13 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
     end
   end
 
-  describe ':create' do
+  describe ':delete' do
     before do
       gateway.dataset(:users).put(id: 1, name: 'Jane')
       gateway.dataset(:users).put(id: 2, name: 'John')
     end
 
-    it 'returns a create command' do
+    it 'deletes matching data' do
       pending 'not implemented yet'
 
       relation.get(2).command(:delete).call
