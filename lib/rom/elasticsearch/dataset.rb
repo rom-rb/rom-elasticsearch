@@ -1,3 +1,5 @@
+require 'rom/initializer'
+
 require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/errors'
 
