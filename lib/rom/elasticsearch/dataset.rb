@@ -135,7 +135,7 @@ module ROM
       # @api private
       def view
         if params[:id]
-          [Hash[client.get(params)]] # TODO Figure out why the [Hash[result]] part i s needed
+          [client.get(params)]
         else
           client.search(**params, body: body).fetch('hits').fetch('hits')
         end
