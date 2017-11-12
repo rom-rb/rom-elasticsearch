@@ -1,27 +1,8 @@
 require 'rom/elasticsearch/query_methods'
+require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
-    # @api private
-    class Error < StandardError
-      def initialize(wrapped_error)
-        super(wrapped_error.message)
-        @wrapped_error = wrapped_error
-      end
-
-      attr_reader :wrapped_error
-    end
-
-    # @api private
-    class SearchError < Error
-      def initialize(wrapped_error, query)
-        super(wrapped_error)
-        @query = query
-      end
-
-      attr_reader :query
-    end
-
     # ElasticSearch dataset
     #
     # @api public
