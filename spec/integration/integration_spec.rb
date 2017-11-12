@@ -1,8 +1,10 @@
 RSpec.describe 'integration' do
+  let(:users) { relations[:users] }
+
   include_context 'container'
 
-  before {
-    gateway['user'].delete_all
+  before do
+    gateway[:users].delete_all
 
     conf.relation(:users) do
       schema(:users)
@@ -15,14 +17,11 @@ RSpec.describe 'integration' do
     conf.commands(:users) do
       define(:create)
     end
-  }
+  end
 
-  after {
-    gateway['user'].wait.delete_all
-  }
-
-
-  let(:users) { container.relations[:users] }
+  after do
+    gateway[:users].wait.delete_all
+  end
 
   it 'creating records' do
     expect(users.to_a).to be_a(Array)
@@ -33,19 +32,8 @@ RSpec.describe 'integration' do
 
     expect(result).to be_a(Hash)
 
-    expect(result).
-      to eql(
-           'id' => 3289,
-           'username' => 'kwando',
-           'email' => 'hannes@bemt.nu'
-         )
+    expect(result).to eql('id' => 3289, 'username' => 'kwando', 'email' => 'hannes@bemt.nu')
 
     expect(users.like('kwando').to_a).not_to be_empty
-  end
-
-  describe 'sanity checks' do
-    it 'is a ROM::Gateway' do
-      expect(gateway).to be_a_kind_of(ROM::Gateway)
-    end
   end
 end
