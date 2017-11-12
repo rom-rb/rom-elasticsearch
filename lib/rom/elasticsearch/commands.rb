@@ -30,7 +30,7 @@ module ROM
       class Delete < ROM::Commands::Delete
         # @api private
         def execute
-          relation.delete
+          relation.dataset.delete
         end
       end
     end

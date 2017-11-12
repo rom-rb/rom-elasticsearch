@@ -19,4 +19,19 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
       expect(command.call(id: 1, name: 'Jane')).to eql('id' => 1, 'name' => 'Jane')
     end
   end
+
+  describe ':create' do
+    before do
+      gateway.dataset(:users).put(id: 1, name: 'Jane')
+      gateway.dataset(:users).put(id: 2, name: 'John')
+    end
+
+    it 'returns a create command' do
+      pending 'not implemented yet'
+
+      relation.get(2).command(:delete).call
+
+      expect(relation.to_a).to eql([{ 'id' => 1, 'name' => 'Jane' }])
+    end
+  end
 end
