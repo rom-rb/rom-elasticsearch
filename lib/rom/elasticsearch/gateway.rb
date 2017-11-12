@@ -69,10 +69,10 @@ module ROM
       # @return [Dataset]
       #
       # @api public
-      def [](type)
+      def dataset(type)
         root.params(type: Dry::Core::Inflector.singularize(type))
       end
-      alias_method :dataset, :[]
+      alias_method :[], :dataset
 
       # Delete an index
       #
