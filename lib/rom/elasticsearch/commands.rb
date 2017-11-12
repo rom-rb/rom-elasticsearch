@@ -13,7 +13,7 @@ module ROM
         # @api private
         def execute(attributes)
           result = dataset.put(attributes.to_h)
-          relation.get(result['_id']).one['_source']
+          [relation.get(result['_id']).one['_source']]
         end
 
         private
