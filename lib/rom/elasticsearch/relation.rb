@@ -3,6 +3,9 @@ require 'rom/elasticsearch/query_methods'
 
 module ROM
   module Elasticsearch
+    # Elasticsearch relation API
+    #
+    # @api public
     class Relation < ROM::Relation
       adapter :elasticsearch
 
