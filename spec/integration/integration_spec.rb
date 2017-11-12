@@ -29,9 +29,10 @@ RSpec.describe 'integration' do
 
     user_id = 3289
 
-    result = commands[:users].create.(id: user_id, username: 'kwando', email: 'hannes@bemt.nu')
+    result = commands[:users].create.(id: user_id, username: 'kwando', email: 'hannes@bemt.nu').first
 
     expect(result).to be_a(Hash)
+
     expect(result).
       to eql(
            'id' => 3289,
