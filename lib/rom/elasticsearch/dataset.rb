@@ -11,6 +11,7 @@ module ROM
 
       include QueryMethods
 
+      # Default query options
       ALL = { query: { match_all: EMPTY_HASH } }.freeze
 
       # @!attribute [r] client
