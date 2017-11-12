@@ -4,7 +4,7 @@ rescue LoadError
   require 'pry'
 end
 
-require 'rom/elasticsearch'
+require 'rom-elasticsearch'
 
 SPEC_ROOT = Pathname(__FILE__).dirname
 
