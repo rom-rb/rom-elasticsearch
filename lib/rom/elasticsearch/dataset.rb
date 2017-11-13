@@ -47,8 +47,8 @@ module ROM
       # @return [Hash]
       #
       # @api public
-      def delete(id = params[:id])
-        client.delete(id)
+      def delete
+        client.delete(params)
       end
 
       # Delete everything matching configured params and body

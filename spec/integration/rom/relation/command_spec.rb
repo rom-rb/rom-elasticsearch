@@ -6,7 +6,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
   before do
     conf.relation(:users) do
       schema(:users) do
-        attribute :id,   ROM::Types::Int
+        attribute :id,   ROM::Types::Int.meta(primary_key: true)
         attribute :name, ROM::Types::String
       end
     end
@@ -22,14 +22,16 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
 
   describe ':delete' do
     before do
-      gateway.dataset(:users).put(id: 1, name: 'Jane')
-      gateway.dataset(:users).put(id: 2, name: 'John')
+      relation.command(:create).call(id: 1, name: 'Jane')
+      relation.command(:create).call(id: 2, name: 'John')
+
+      refresh
     end
 
     it 'deletes matching data' do
-      pending 'not implemented yet'
-
       relation.get(2).command(:delete).call
+
+      refresh
 
       expect(relation.to_a).to eql([{ id: 1, name: 'Jane' }])
     end

@@ -12,7 +12,12 @@ module ROM
       class Create < ROM::Commands::Create
         # @api private
         def execute(attributes)
-          result = dataset.put(attributes.to_h)
+          result =
+            if _id
+              dataset.params(id: attributes.fetch(_id)).put(attributes.to_h)
+            else
+              dataset.put(attributes.to_h)
+            end
           [relation.get(result['_id']).one]
         end
 
@@ -21,6 +26,10 @@ module ROM
         # @api private
         def dataset
           relation.dataset
+        end
+
+        def _id
+          relation.schema.primary_key_name
         end
       end
 
