@@ -8,13 +8,17 @@ RSpec.describe ROM::Elasticsearch::Dataset do
   end
 
   before do
-    client.indices.delete(index: index) if client.indices.exists?(index: index)
     client.indices.create(index: index)
 
     dataset.put(username: 'eve')
     dataset.put(username: 'bob')
     dataset.put(username: 'alice')
+
     refresh
+  end
+
+  after do
+    client.indices.delete(index: index)
   end
 
   describe 'insert' do
@@ -22,21 +26,11 @@ RSpec.describe ROM::Elasticsearch::Dataset do
       expect(dataset.params(size: 100).to_a.size).to eq(3)
       expect(dataset.params(size: 2).to_a.size).to eq(2)
 
-      result = dataset.search(
-        query: {
-          query_string: {
-            query: 'username:eve'
-          }
-        }
-      ).to_a
+      expect(dataset.search(query: {query_string: {query: 'username:eve'}}).to_a).to eql([{'username' => 'eve'}])
 
-      expect(result.map { |r| r['_source'] }).to match_array([{'username' => 'eve'}])
+      expect(dataset.query_string('username:alice').to_a).to eql([{'username' => 'alice'}])
 
-      result = dataset.query_string('username:nisse').to_a
-      expect(result).to match_array([])
-
-      result = dataset.query_string('username:alice').to_a
-      expect(result.map { |r| r['_source'] }).to match_array([{'username' => 'alice'}])
+      expect(dataset.query_string('username:nisse').to_a).to eql([])
     end
   end
 
