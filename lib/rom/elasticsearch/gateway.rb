@@ -71,24 +71,6 @@ module ROM
         root.params(type: Dry::Core::Inflector.singularize(type))
       end
       alias_method :[], :dataset
-
-      # Delete an index
-      #
-      # @param [Symbol] name
-      #
-      # @api public
-      def delete_index(name)
-        client.indices.delete(index: name)
-      end
-
-      # Create an index
-      #
-      # @param [Symbol] name
-      #
-      # @api public
-      def create_index(name)
-        client.indices.create(index: name)
-      end
     end
   end
 end
