@@ -7,7 +7,7 @@ RSpec.describe ROM::Elasticsearch::Dataset do
     client.indices.refresh(index: index)
   end
 
-  before {
+  before do
     client.indices.delete(index: index) if client.indices.exists?(index: index)
     client.indices.create(index: index)
 
@@ -15,7 +15,7 @@ RSpec.describe ROM::Elasticsearch::Dataset do
     dataset.put(username: 'bob')
     dataset.put(username: 'alice')
     refresh
-  }
+  end
 
   describe 'insert' do
     it 'works' do
