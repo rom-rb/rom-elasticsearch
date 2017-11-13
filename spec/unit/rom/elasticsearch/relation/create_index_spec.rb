@@ -33,7 +33,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
     end
 
     after do
-      client.indices.delete(index: :people)
+      relation.delete_index
     end
 
     it 'creates an index' do

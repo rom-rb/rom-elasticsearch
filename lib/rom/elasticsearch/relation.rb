@@ -58,6 +58,17 @@ module ROM
           raise MissingIndexError, name
         end
       end
+
+      # @api public
+      def delete_index
+        index = self.class.index
+
+        if index
+          dataset.delete_index(index: index)
+        else
+          raise MissingIndexError, name
+        end
+      end
     end
   end
 end

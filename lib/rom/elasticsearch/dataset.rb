@@ -148,6 +148,17 @@ module ROM
         client.indices.create(opts)
       end
 
+      # Delete an index
+      #
+      # @param [Hash] opts ES options
+      #
+      # @api public
+      #
+      # @return [Hash]
+      def delete_index(opts)
+        client.indices.delete(opts)
+      end
+
       private
 
       # Return results of a query based on configured params and body
