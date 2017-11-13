@@ -7,6 +7,13 @@ module ROM
     #
     # @api public
     class Schema < ROM::Schema
+      # Return a hash with mapping properties
+      #
+      # @api private
+      def to_properties
+        select(&:properties?).map { |attr| [attr.name, attr.properties] }.to_h
+      end
+
       # Customized output hash constructor which symbolizes keys
       # and optionally applies custom read-type coercions
       #

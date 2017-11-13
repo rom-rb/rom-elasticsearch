@@ -51,6 +51,15 @@ module ROM
         client.indices.get_settings[index.to_s]['settings']['index']
       end
 
+      # Return index mappings
+      #
+      # @return [Hash]
+      #
+      # @api public
+      def mappings
+        client.indices.get_mapping[index.to_s]['mappings'][type.to_s]
+      end
+
       # Delete by id
       #
       # @return [Hash]
@@ -97,7 +106,7 @@ module ROM
       #
       # @api public
       def type
-        params[:type]
+        params[:type] || index
       end
 
       # Return configured index name

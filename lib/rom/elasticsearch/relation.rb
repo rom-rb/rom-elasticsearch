@@ -1,6 +1,7 @@
 require 'rom/relation'
 require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/schema'
+require 'rom/elasticsearch/attribute'
 
 module ROM
   module Elasticsearch
@@ -26,6 +27,7 @@ module ROM
       defines :index_settings
 
       schema_class Elasticsearch::Schema
+      schema_attr_class Elasticsearch::Attribute
 
       forward :wait
       forward(*QueryMethods.public_instance_methods(false))
@@ -70,7 +72,13 @@ module ROM
         settings = self.class.index_settings
 
         if index
-          dataset.create_index(index: index, body: { settings: settings })
+          dataset.create_index(
+            index: index,
+            body: {
+              settings: settings,
+              mappings: { dataset.type => { properties: schema.to_properties } }
+            }
+          )
         else
           raise MissingIndexError, name
         end

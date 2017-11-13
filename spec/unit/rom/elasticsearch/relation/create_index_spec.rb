@@ -65,5 +65,27 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
         expect(relation.dataset.settings['number_of_shards']).to eql("2")
       end
     end
+
+    context 'with customized attribute mappings' do
+      before do
+        conf.relation(:users) do
+          schema do
+            attribute :id, ROM::Types::Int
+            attribute :name, ROM::Types::String.meta(type: "text")
+          end
+
+          index :people
+
+          index_settings number_of_shards: 2
+        end
+      end
+
+      it 'creates an index' do
+        relation.create_index
+
+        expect(gateway.index?(:people)).to be(true)
+        expect(relation.dataset.mappings).to eql("properties" => { "name" => { "type" => "text" } })
+      end
+    end
   end
 end
