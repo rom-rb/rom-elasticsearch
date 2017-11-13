@@ -16,7 +16,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
     it 'returns a create command' do
       command = relation.command(:create, result: :one)
 
-      expect(command.call(id: 1, name: 'Jane')).to eql('id' => 1, 'name' => 'Jane')
+      expect(command.call(id: 1, name: 'Jane')).to eql(id: 1, name: 'Jane')
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
 
       relation.get(2).command(:delete).call
 
-      expect(relation.to_a).to eql([{ 'id' => 1, 'name' => 'Jane' }])
+      expect(relation.to_a).to eql([{ id: 1, name: 'Jane' }])
     end
   end
 end

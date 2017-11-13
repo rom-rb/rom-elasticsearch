@@ -7,7 +7,11 @@ RSpec.describe 'integration' do
     gateway[:users].delete_all
 
     conf.relation(:users) do
-      schema(:users)
+      schema(:users) do
+        attribute :id, ROM::Types::Int
+        attribute :username, ROM::Types::String
+        attribute :email, ROM::Types::String
+      end
 
       def like(name)
         query(prefix: { username: name })
@@ -32,7 +36,7 @@ RSpec.describe 'integration' do
 
     expect(result).to be_a(Hash)
 
-    expect(result).to eql('id' => 3289, 'username' => 'kwando', 'email' => 'hannes@bemt.nu')
+    expect(result).to eql(id: 3289, username: 'kwando', email: 'hannes@bemt.nu')
 
     expect(users.like('kwando').to_a).not_to be_empty
   end

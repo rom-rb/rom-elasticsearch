@@ -11,6 +11,6 @@ RSpec.describe ROM::Elasticsearch::Relation, '#to_a' do
   end
 
   it 'returns user tuples' do
-    expect(relation).to match_array([{ 'id' => 1, 'name' => 'Jane' }, { 'id' => 2, 'name' => 'John' }])
+    expect(relation).to match_array([{ id: 1, name: 'Jane' }, { id: 2, name: 'John' }])
   end
 end
