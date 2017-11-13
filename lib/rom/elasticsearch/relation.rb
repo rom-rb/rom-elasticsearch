@@ -23,6 +23,8 @@ module ROM
 
       defines :index
 
+      defines :index_settings
+
       schema_class Elasticsearch::Schema
 
       forward :wait
@@ -31,6 +33,20 @@ module ROM
       # Overridden output_schema, as we *always* want to use it,
       # whereas in core, it is only used when there's at least one read-type
       option :output_schema, default: -> { schema.to_output_hash }
+
+      index_settings(
+        { number_of_shards: 1,
+          index: {
+            analysis: {
+              analyzer: {
+                standard_stopwords: {
+                  type: "standard",
+                  stopwords: "_english_"
+                }
+              }
+            }
+          } }.freeze
+      )
 
       # @api private
       def self.inherited(klass)
@@ -51,9 +67,10 @@ module ROM
       # @api public
       def create_index
         index = self.class.index
+        settings = self.class.index_settings
 
         if index
-          dataset.create_index(index: index)
+          dataset.create_index(index: index, body: { settings: settings })
         else
           raise MissingIndexError, name
         end

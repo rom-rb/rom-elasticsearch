@@ -42,6 +42,15 @@ module ROM
         client.index(**params, body: data)
       end
 
+      # Return index settings
+      #
+      # @return [Hash]
+      #
+      # @api public
+      def settings
+        client.indices.get_settings[index.to_s]['settings']['index']
+      end
+
       # Delete by id
       #
       # @return [Hash]

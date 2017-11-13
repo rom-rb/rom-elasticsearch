@@ -21,25 +21,49 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
   end
 
   context 'when custom :index is configured' do
-    before do
-      conf.relation(:users) do
-        schema do
-          attribute :id, ROM::Types::Int
-          attribute :name, ROM::Types::String
-        end
-
-        index :people
-      end
-    end
-
     after do
       relation.delete_index
     end
 
-    it 'creates an index' do
-      relation.create_index
+    context 'with default settings' do
+      before do
+        conf.relation(:users) do
+          schema do
+            attribute :id, ROM::Types::Int
+            attribute :name, ROM::Types::String
+          end
 
-      expect(gateway.index?(:people)).to be(true)
+          index :people
+        end
+      end
+
+      it 'creates an index' do
+        relation.create_index
+
+        expect(gateway.index?(:people)).to be(true)
+      end
+    end
+
+    context 'with customized settings' do
+      before do
+        conf.relation(:users) do
+          schema do
+            attribute :id, ROM::Types::Int
+            attribute :name, ROM::Types::String
+          end
+
+          index :people
+
+          index_settings number_of_shards: 2
+        end
+      end
+
+      it 'creates an index' do
+        relation.create_index
+
+        expect(gateway.index?(:people)).to be(true)
+        expect(relation.dataset.settings['number_of_shards']).to eql("2")
+      end
     end
   end
 end
