@@ -12,7 +12,7 @@ RSpec.shared_context 'setup' do
   let(:commands) { container[:commands] }
 
   before do
-    client.indices.create(index: root_index)
+    client.indices.create(index: root_index) unless gateway.index?(root_index)
   end
 
   after do
