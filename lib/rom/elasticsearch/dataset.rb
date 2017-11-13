@@ -62,18 +62,24 @@ module ROM
       #
       # @return [Array<Hash>]
       def to_a
-        view
+        to_enum.to_a
       end
 
       # Materialize and iterate over results
       #
       # @api public
-      def each(&block)
+      def each
+        return to_enum unless block_given?
         view.each do |result|
           yield(result[SOURCE_KEY])
         end
       rescue ::Elasticsearch::Transport::Transport::Error => ex
         raise SearchError.new(ex, options)
+      end
+
+      # @api public
+      def map(&block)
+        to_a.map(&block)
       end
 
       # Return configured type from params

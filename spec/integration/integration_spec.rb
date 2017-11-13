@@ -4,8 +4,6 @@ RSpec.describe 'integration' do
   include_context 'container'
 
   before do
-    gateway[:users].delete_all
-
     conf.relation(:users) do
       schema(:users) do
         attribute :id, ROM::Types::Int
