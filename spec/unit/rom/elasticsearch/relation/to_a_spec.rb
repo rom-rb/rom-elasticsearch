@@ -17,7 +17,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#to_a' do
   end
 
   it 'returns user structs' do
-    jane, john = relation.with(auto_struct: true).to_a
+    jane, john = relation.with(auto_struct: true).to_a.sort_by(&:name)
 
     expect(jane.id).to be(1)
     expect(jane.name).to eql('Jane')
