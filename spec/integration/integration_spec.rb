@@ -1,7 +1,7 @@
 RSpec.describe 'integration' do
   let(:users) { relations[:users] }
 
-  include_context 'container'
+  include_context 'setup'
 
   before do
     conf.relation(:users) do
@@ -19,10 +19,6 @@ RSpec.describe 'integration' do
     conf.commands(:users) do
       define(:create)
     end
-  end
-
-  after do
-    gateway[:users].wait.delete_all
   end
 
   it 'creating records' do

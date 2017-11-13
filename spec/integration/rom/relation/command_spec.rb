@@ -1,7 +1,7 @@
 RSpec.describe ROM::Elasticsearch::Relation, '#command' do
   subject(:relation) { relations[:users] }
 
-  include_context 'container'
+  include_context 'setup'
 
   before do
     conf.relation(:users) do

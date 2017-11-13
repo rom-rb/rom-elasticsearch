@@ -8,6 +8,8 @@ RSpec.describe ROM::Elasticsearch::Relation, '#to_a' do
   before do
     relation.insert(id: 1, name: 'Jane')
     relation.insert(id: 2, name: 'John')
+
+    refresh
   end
 
   it 'returns user tuples' do

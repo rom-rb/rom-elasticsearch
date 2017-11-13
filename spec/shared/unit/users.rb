@@ -1,9 +1,7 @@
 RSpec.shared_context 'users' do
-  include_context 'container'
+  include_context 'setup'
 
   before do
-    gateway[:users]
-
     conf.relation(:users) do
       schema(:users) do
         attribute :id, ROM::Types::Int

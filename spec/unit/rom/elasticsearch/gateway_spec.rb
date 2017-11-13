@@ -1,7 +1,7 @@
 require 'rom/lint/spec'
 
 RSpec.describe ROM::Elasticsearch::Gateway do
-  include_context 'container'
+  let(:uri) { 'http://localhost:9200/rom-test' }
 
   it_behaves_like 'a rom gateway' do
     let(:identifier) { :elasticsearch }

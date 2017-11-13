@@ -1,24 +1,16 @@
 RSpec.describe ROM::Elasticsearch::Dataset do
-  let(:index) { 'rom-test' }
-  let(:client) { Elasticsearch::Client.new(log: false) }
-  let(:dataset) { ROM::Elasticsearch::Dataset.new(client, params: { index: index, type: 'users' }) }
-
-  def refresh
-    client.indices.refresh(index: index)
+  subject(:dataset) do
+    ROM::Elasticsearch::Dataset.new(client, params: { index: index, type: 'users' })
   end
 
-  before do
-    client.indices.create(index: index)
+  include_context 'setup'
 
+  before do
     dataset.put(username: 'eve')
     dataset.put(username: 'bob')
     dataset.put(username: 'alice')
 
     refresh
-  end
-
-  after do
-    client.indices.delete(index: index)
   end
 
   describe 'insert' do
