@@ -15,6 +15,11 @@ module ROM
 
       forward :wait
       forward(*QueryMethods.public_instance_methods(false))
+
+      # @api public
+      def insert(tuple)
+        dataset.put(tuple)
+      end
     end
   end
 end

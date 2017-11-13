@@ -16,6 +16,9 @@ module ROM
       # Default query options
       ALL = { query: { match_all: EMPTY_HASH } }.freeze
 
+      # The source key in raw results
+      SOURCE_KEY = '_source'.freeze
+
       # @!attribute [r] client
       #   @return [::Elasticsearch::Client] configured client from the gateway
       param :client
@@ -66,7 +69,9 @@ module ROM
       #
       # @api public
       def each(&block)
-        view.each(&block)
+        view.each do |result|
+          yield(result[SOURCE_KEY])
+        end
       rescue ::Elasticsearch::Transport::Transport::Error => ex
         raise SearchError.new(ex, options)
       end
