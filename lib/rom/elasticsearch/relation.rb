@@ -4,6 +4,17 @@ require 'rom/elasticsearch/schema'
 
 module ROM
   module Elasticsearch
+    # An error raised when methods that rely on configured :index are called
+    # on a relation which does not have the index defined
+    #
+    # @api public
+    class MissingIndexError < StandardError
+      # @api private
+      def initialize(name)
+        super "relation #{name.inspect} doesn't have :index configured"
+      end
+    end
+
     # Elasticsearch relation API
     #
     # @api public
@@ -35,6 +46,17 @@ module ROM
       # @api public
       def insert(tuple)
         dataset.put(tuple)
+      end
+
+      # @api public
+      def create_index
+        index = self.class.index
+
+        if index
+          dataset.create_index(index: index)
+        else
+          raise MissingIndexError, name
+        end
       end
     end
   end

@@ -137,6 +137,17 @@ module ROM
         params(refresh: 'wait_for')
       end
 
+      # Create an index
+      #
+      # @param [Hash] opts ES options
+      #
+      # @api public
+      #
+      # @return [Hash]
+      def create_index(opts)
+        client.indices.create(opts)
+      end
+
       private
 
       # Return results of a query based on configured params and body
