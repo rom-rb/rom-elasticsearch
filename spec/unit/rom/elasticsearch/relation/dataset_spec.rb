@@ -73,7 +73,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#dataset' do
     end
 
     it 'sets custom type under root index' do
-      expect(relation.dataset.index).to eql('rom-test')
+      expect(relation.dataset.index).to eql(root_index)
       expect(relation.dataset.type).to eql(:person)
     end
   end

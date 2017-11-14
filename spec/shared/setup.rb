@@ -3,7 +3,7 @@ RSpec.shared_context 'setup' do
 
   let(:conf) { ROM::Configuration.new(:elasticsearch, uri) }
   let(:container) { ROM.container(conf) }
-  let(:root_index) { 'rom-test' }
+  let(:root_index) { :rom_test }
 
   let(:gateway) { conf.gateways[:default] }
   let(:client) { gateway.client }

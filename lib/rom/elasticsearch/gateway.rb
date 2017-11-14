@@ -48,8 +48,10 @@ module ROM
       # @api private
       def initialize(url, log: false)
         url = URI.parse(url)
+        index = url.path[1..-1].to_sym
+
         @client = ::Elasticsearch::Client.new(host: "#{url.host}:#{url.port || 9200}", log: log)
-        @root = Dataset.new(@client, params: { index: url.path[1..-1] })
+        @root = Dataset.new(@client, params: { index: index })
       end
 
       # Return true if a dataset with the given index exists
