@@ -1,3 +1,5 @@
+require 'rom/elasticsearch/errors'
+
 module ROM
   module Elasticsearch
     # @api public
@@ -9,7 +11,7 @@ module ROM
       # @return [Dataset]
       #
       # @api public
-      def get(id = options[:id])
+      def get(id)
         params(id: id)
       end
 

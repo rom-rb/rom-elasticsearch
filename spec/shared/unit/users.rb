@@ -6,6 +6,8 @@ RSpec.shared_context 'users' do
       schema(:users) do
         attribute :id, ROM::Types::Int
         attribute :name, ROM::Types::String
+
+        primary_key :id
       end
     end
   end

@@ -91,8 +91,8 @@ module ROM
         view.each do |result|
           yield(result[SOURCE_KEY])
         end
-      rescue ::Elasticsearch::Transport::Transport::Error => ex
-        raise SearchError.new(ex, options)
+      rescue ::Elasticsearch::Transport::Transport::Error => e
+        raise SearchError.new(e, options)
       end
 
       # @api public
