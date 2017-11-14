@@ -15,17 +15,6 @@ module ROM
         params(id: id)
       end
 
-      # Return a new dataset configured to search via :filter body option
-      #
-      # @param [Integer] id
-      #
-      # @return [Dataset]
-      #
-      # @api public
-      def filter(filter)
-        body(filter: filter)
-      end
-
       # Return a new dataset configured to search via new body options
       #
       # @param [Integer] id
