@@ -1,5 +1,4 @@
 require 'rom/relation'
-require 'rom/elasticsearch/query_methods'
 require 'rom/elasticsearch/schema'
 require 'rom/elasticsearch/attribute'
 
@@ -21,7 +20,6 @@ module ROM
       schema_attr_class Elasticsearch::Attribute
 
       forward :wait
-      forward(*QueryMethods.public_instance_methods(false))
 
       # Overridden output_schema, as we *always* want to use it,
       # whereas in core, it is only used when there's at least one read-type
@@ -68,6 +66,26 @@ module ROM
           else
             {}
           end
+      end
+
+      # @api public
+      def get(id)
+        new(dataset.get(id))
+      end
+
+      # @api public
+      def search(options)
+        new(dataset.search(options))
+      end
+
+      # @api public
+      def query(query)
+        new(dataset.query(query))
+      end
+
+      # @api public
+      def query_string(expr)
+        new(dataset.query_string(expr))
       end
 
       # @api public
