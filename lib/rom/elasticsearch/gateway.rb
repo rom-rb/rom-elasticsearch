@@ -68,7 +68,7 @@ module ROM
       #
       # @api public
       def dataset(type)
-        root.params(type: Dry::Core::Inflector.singularize(type))
+        root.params(type: Dry::Core::Inflector.singularize(type).to_sym)
       end
       alias_method :[], :dataset
     end

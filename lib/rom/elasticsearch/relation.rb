@@ -5,24 +5,15 @@ require 'rom/elasticsearch/attribute'
 
 module ROM
   module Elasticsearch
-    # An error raised when methods that rely on configured :index are called
-    # on a relation which does not have the index defined
-    #
-    # @api public
-    class MissingIndexError < StandardError
-      # @api private
-      def initialize(name)
-        super "relation #{name.inspect} doesn't have :index configured"
-      end
-    end
-
     # Elasticsearch relation API
     #
     # @api public
     class Relation < ROM::Relation
       adapter :elasticsearch
 
-      defines :index
+      defines :index_name
+
+      defines :index_type
 
       defines :index_settings
 
@@ -56,9 +47,27 @@ module ROM
 
         klass.class_eval do
           dataset do
-            klass.index ? with(params: { index: klass.index }) : self
+            if klass.dataset_params.empty?
+              self
+            else
+              params(klass.dataset_params)
+            end
           end
         end
+      end
+
+      # @api private
+      def self.dataset_params
+        @__dataset_params__ ||=
+          if index_name && index_type
+            { index: index_name, type: index_type }
+          elsif index_type
+            { type: index_type }
+          elsif index_name
+            { index: index_name }
+          else
+            {}
+          end
       end
 
       # @api public
@@ -68,31 +77,23 @@ module ROM
 
       # @api public
       def create_index
-        index = self.class.index
-        settings = self.class.index_settings
-
-        if index
-          dataset.create_index(
-            index: index,
-            body: {
-              settings: settings,
-              mappings: { dataset.type => { properties: schema.to_properties } }
-            }
-          )
-        else
-          raise MissingIndexError, name
-        end
+        dataset.create_index(index_params)
       end
 
       # @api public
       def delete_index
-        index = self.class.index
+        dataset.delete_index
+      end
 
-        if index
-          dataset.delete_index(index: index)
-        else
-          raise MissingIndexError, name
-        end
+      private
+
+      def index_params
+        self.class.dataset_params.merge(
+          body: {
+            settings: self.class.index_settings,
+            mappings: { dataset.type => { properties: schema.to_properties } }
+          }
+        )
       end
     end
   end

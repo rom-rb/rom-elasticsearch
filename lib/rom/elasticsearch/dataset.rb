@@ -162,7 +162,7 @@ module ROM
       # @api public
       #
       # @return [Hash]
-      def create_index(opts)
+      def create_index(opts = EMPTY_HASH)
         client.indices.create(opts)
       end
 
@@ -173,8 +173,8 @@ module ROM
       # @api public
       #
       # @return [Hash]
-      def delete_index(opts)
-        client.indices.delete(opts)
+      def delete_index(opts = EMPTY_HASH)
+        client.indices.delete(params.merge(opts))
       end
 
       private
