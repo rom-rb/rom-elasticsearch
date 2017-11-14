@@ -25,11 +25,11 @@ module ROM
 
       # @!attribute [r] params
       #   @return [Hash] default params
-      option :params, optional: true, default: -> { EMPTY_HASH }
+      option :params, default: -> { EMPTY_HASH }
 
       # @!attribute [r] client
       #   @return [Hash] default body
-      option :body, optional: true, default: -> { EMPTY_HASH }
+      option :body, default: -> { EMPTY_HASH }
 
       # Put new data
       #
