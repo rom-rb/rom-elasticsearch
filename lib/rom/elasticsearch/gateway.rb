@@ -4,6 +4,7 @@ require 'uri'
 
 require 'rom/gateway'
 require 'rom/elasticsearch/dataset'
+require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
@@ -37,6 +38,10 @@ module ROM
     class Gateway < ROM::Gateway
       adapter :elasticsearch
 
+      # @!attribute [r] url
+      #   @return [URI] Connection URL
+      attr_reader :url
+
       # @!attribute [r] client
       #   @return [::Elasticsearch::Client] configured ES client
       attr_reader :client
@@ -46,12 +51,16 @@ module ROM
       attr_reader :root
 
       # @api private
-      def initialize(url, log: false)
-        url = URI.parse(url)
-        index = url.path[1..-1].to_sym
+      def initialize(uri, log: false)
+        @url = URI.parse(uri)
 
-        @client = ::Elasticsearch::Client.new(host: "#{url.host}:#{url.port || 9200}", log: log)
-        @root = Dataset.new(@client, params: { index: index })
+        index = url.path[1..-1]
+        host = url.select(:host, :port).join(":")
+
+        raise ConfigurationError.new("#{url} must have a path") unless index
+
+        @client = ::Elasticsearch::Client.new(host: host, log: log)
+        @root = Dataset.new(@client, params: { index: index.to_sym })
       end
 
       # Return true if a dataset with the given index exists
