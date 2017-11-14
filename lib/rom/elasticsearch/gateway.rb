@@ -3,6 +3,7 @@ require 'elasticsearch'
 require 'uri'
 
 require 'rom/gateway'
+require 'rom/support/notifications'
 require 'rom/elasticsearch/dataset'
 require 'rom/elasticsearch/errors'
 
@@ -36,6 +37,8 @@ module ROM
     #
     # @api public
     class Gateway < ROM::Gateway
+      extend Notifications::Listener
+
       adapter :elasticsearch
 
       # @!attribute [r] url
@@ -49,6 +52,11 @@ module ROM
       # @!attribute [r] root
       #   @return [Dataset] root dataset
       attr_reader :root
+
+      subscribe('configuration.relations.class.ready', adapter: :elasticsearch) do |event|
+        relation = event[:relation]
+        relation.index_name(relation.relation_name.to_sym) unless relation.index_name
+      end
 
       # @api private
       def initialize(uri, log: false)
