@@ -6,7 +6,8 @@ RSpec.describe ROM::Elasticsearch::Dataset, '#params' do
   include_context 'user fixtures'
 
   it 'returns a new dataset with updated params' do
-    expect(dataset.params(size: 100).to_a.size).to eq(3)
-    expect(dataset.params(size: 2).to_a.size).to eq(2)
+    new_ds = dataset.params(size: 100)
+
+    expect(new_ds.params).to eql(size: 100, index: root_index, type: 'users')
   end
 end

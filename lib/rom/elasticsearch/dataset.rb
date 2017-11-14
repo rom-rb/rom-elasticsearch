@@ -140,8 +140,8 @@ module ROM
       # @return [Hash]
       #
       # @api public
-      def params(new = EMPTY_HASH)
-        if new.empty?
+      def params(new = nil)
+        if new.nil?
           @params
         else
           with(params: params.merge(new))
