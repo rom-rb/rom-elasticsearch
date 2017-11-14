@@ -106,7 +106,7 @@ module ROM
       #
       # @api public
       def type
-        params[:type] || index
+        params[:type]
       end
 
       # Return configured index name
