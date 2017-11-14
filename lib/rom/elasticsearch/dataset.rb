@@ -125,8 +125,8 @@ module ROM
       # @return [Hash]
       #
       # @api public
-      def body(new = EMPTY_HASH)
-        if new.empty?
+      def body(new = nil)
+        if new.nil?
           @body
         else
           with(body: body.merge(new))
