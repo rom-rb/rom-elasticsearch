@@ -41,7 +41,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#dataset' do
     end
   end
 
-  context 'when custom :index_type is configured' do
+  context 'when custom :index_name and :index_type are configured' do
     before do
       conf.relation(:users) do
         schema do
@@ -57,6 +57,24 @@ RSpec.describe ROM::Elasticsearch::Relation, '#dataset' do
     it 'sets custom name and type' do
       expect(relation.dataset.index).to eql(:people)
       expect(relation.dataset.type).to eql(:user)
+    end
+  end
+
+  context 'when custom :index_type is configured' do
+    before do
+      conf.relation(:users) do
+        schema do
+          attribute :id, ROM::Types::Int
+          attribute :name, ROM::Types::String
+        end
+
+        index_type :person
+      end
+    end
+
+    it 'sets custom type under root index' do
+      expect(relation.dataset.index).to eql('rom-test')
+      expect(relation.dataset.type).to eql(:person)
     end
   end
 end
