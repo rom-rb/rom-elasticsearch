@@ -6,8 +6,8 @@ RSpec.describe ROM::Elasticsearch::Relation, '#to_a' do
   include_context 'users'
 
   before do
-    relation.insert(id: 1, name: 'Jane')
-    relation.insert(id: 2, name: 'John')
+    relation.command(:create).(id: 1, name: 'Jane')
+    relation.command(:create).(id: 2, name: 'John')
 
     refresh
   end

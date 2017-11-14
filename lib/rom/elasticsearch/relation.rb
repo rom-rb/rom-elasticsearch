@@ -71,11 +71,6 @@ module ROM
       end
 
       # @api public
-      def insert(tuple)
-        dataset.put(tuple)
-      end
-
-      # @api public
       def create_index
         dataset.create_index(index_params)
       end
@@ -83,6 +78,11 @@ module ROM
       # @api public
       def delete_index
         dataset.delete_index
+      end
+
+      # @api public
+      def delete
+        dataset.wait.delete_all
       end
 
       private
