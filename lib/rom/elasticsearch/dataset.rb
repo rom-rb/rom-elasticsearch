@@ -68,6 +68,8 @@ module ROM
           client.delete(params)
         elsif body.empty?
           client.delete_by_query(params.merge(body: body.merge(ALL)))
+        else
+          client.delete_by_query(params.merge(body: body))
         end
       end
 
