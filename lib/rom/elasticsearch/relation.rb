@@ -36,6 +36,11 @@ module ROM
       )
 
       # @api public
+      def map(&block)
+        to_a.map(&block)
+      end
+
+      # @api public
       def get(id)
         new(dataset.get(id))
       end
