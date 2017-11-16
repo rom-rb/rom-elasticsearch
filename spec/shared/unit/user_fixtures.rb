@@ -8,4 +8,8 @@ RSpec.shared_context 'user fixtures' do
 
     refresh
   end
+
+  after do
+    gateway[:users].wait.delete_all
+  end
 end

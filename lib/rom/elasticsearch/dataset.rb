@@ -102,7 +102,7 @@ module ROM
 
       # Return configured type from params
       #
-      # @return [String]
+      # @return [Symbol]
       #
       # @api public
       def type
@@ -111,7 +111,7 @@ module ROM
 
       # Return configured index name
       #
-      # @return [String]
+      # @return [Symbol]
       #
       # @api public
       def index
@@ -163,7 +163,7 @@ module ROM
       #
       # @return [Hash]
       def create_index(opts = EMPTY_HASH)
-        client.indices.create(opts)
+        client.indices.create(params.merge(opts))
       end
 
       # Delete an index
