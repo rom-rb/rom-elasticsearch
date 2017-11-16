@@ -152,7 +152,7 @@ module ROM
       #
       # @api public
       def wait
-        params(refresh: 'wait_for')
+        params(refresh: true)
       end
 
       # Create an index
