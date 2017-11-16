@@ -10,10 +10,6 @@ module ROM
     class Relation < ROM::Relation
       adapter :elasticsearch
 
-      defines :index_name
-
-      defines :index_type
-
       defines :index_settings
 
       schema_class Elasticsearch::Schema
@@ -38,35 +34,6 @@ module ROM
             }
           } }.freeze
       )
-
-      # @api private
-      def self.inherited(klass)
-        super
-
-        klass.class_eval do
-          dataset do
-            if klass.dataset_params.empty?
-              self
-            else
-              params(klass.dataset_params)
-            end
-          end
-        end
-      end
-
-      # @api private
-      def self.dataset_params
-        @__dataset_params__ ||=
-          if index_name && index_type
-            { index: index_name, type: index_type }
-          elsif index_type
-            { type: index_type }
-          elsif index_name
-            { index: index_name }
-          else
-            {}
-          end
-      end
 
       # @api public
       def get(id)
@@ -106,12 +73,10 @@ module ROM
       private
 
       def index_params
-        self.class.dataset_params.merge(
+        { index: name.dataset,
           body: {
             settings: self.class.index_settings,
-            mappings: { dataset.type => { properties: schema.to_properties } }
-          }
-        )
+            mappings: { dataset.type => { properties: schema.to_properties } } } }
       end
     end
   end

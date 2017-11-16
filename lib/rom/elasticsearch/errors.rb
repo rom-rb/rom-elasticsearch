@@ -10,8 +10,6 @@ module ROM
       attr_reader :wrapped_error
     end
 
-    ConfigurationError = Class.new(StandardError)
-
     # @api private
     class SearchError < Error
       attr_reader :query

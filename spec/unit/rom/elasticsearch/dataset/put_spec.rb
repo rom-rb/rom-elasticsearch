@@ -1,6 +1,6 @@
 RSpec.describe ROM::Elasticsearch::Dataset, '#put' do
   subject(:dataset) do
-    ROM::Elasticsearch::Dataset.new(client, params: { index: root_index, type: 'users' })
+    ROM::Elasticsearch::Dataset.new(client, params: { index: :users, type: :user })
   end
 
   include_context 'setup'
