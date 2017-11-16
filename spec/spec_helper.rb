@@ -29,7 +29,8 @@ Dir[SPEC_ROOT.join('shared/**/*.rb')].each { |f| require f }
 RSpec.configure do |config|
   config.disable_monkey_patching!
 
-  config.warnings = true
+  # elasticsearch-dsl warnings are killing me - solnic
+  config.warnings = false
 
   config.before do
     module Test
