@@ -15,8 +15,6 @@ module ROM
       schema_class Elasticsearch::Schema
       schema_attr_class Elasticsearch::Attribute
 
-      forward :wait
-
       # Overridden output_schema, as we *always* want to use it,
       # whereas in core, it is only used when there's at least one read-type
       option :output_schema, default: -> { schema.to_output_hash }
