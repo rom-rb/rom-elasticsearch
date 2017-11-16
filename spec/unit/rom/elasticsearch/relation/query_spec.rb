@@ -9,7 +9,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#query' do
     relation.command(:create).(id: 1, name: 'Jane')
     relation.command(:create).(id: 2, name: 'John')
 
-    refresh
+    relation.refresh
   end
 
   it 'returns data matching query options' do

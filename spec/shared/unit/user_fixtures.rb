@@ -6,10 +6,10 @@ RSpec.shared_context 'user fixtures' do
     dataset.put(username: 'bob')
     dataset.put(username: 'alice')
 
-    refresh
+    dataset.refresh
   end
 
   after do
-    gateway[:users].wait.delete_all
+    gateway[:users].refresh.delete_all
   end
 end

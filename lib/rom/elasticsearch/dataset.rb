@@ -148,11 +148,12 @@ module ROM
         end
       end
 
-      # Return a new dataset with 'wait_for' configured
+      # Refresh index
       #
       # @api public
-      def wait
-        params(refresh: true)
+      def refresh
+        client.indices.refresh(index: index)
+        self
       end
 
       # Create an index

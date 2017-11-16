@@ -13,6 +13,6 @@ RSpec.shared_context 'users' do
   end
 
   after do
-    gateway[:users].wait.delete_all
+    gateway[:users].refresh.delete_all
   end
 end

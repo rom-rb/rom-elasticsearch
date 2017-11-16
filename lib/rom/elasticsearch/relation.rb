@@ -67,7 +67,12 @@ module ROM
 
       # @api public
       def delete
-        dataset.wait.delete_all
+        dataset.delete_all
+      end
+
+      # @api public
+      def refresh
+        new(dataset.refresh)
       end
 
       private

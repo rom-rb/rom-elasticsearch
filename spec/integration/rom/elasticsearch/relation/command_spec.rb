@@ -33,13 +33,13 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
       relation.command(:create).call(id: 1, name: 'Jane')
       relation.command(:create).call(id: 2, name: 'John')
 
-      refresh
+      relation.refresh
     end
 
     it 'deletes matching data' do
       relation.get(2).command(:delete).call
 
-      refresh
+      relation.refresh
 
       expect(relation.to_a).to eql([{ id: 1, name: 'Jane' }])
     end

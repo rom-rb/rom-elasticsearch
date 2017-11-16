@@ -10,7 +10,7 @@ RSpec.describe ROM::Elasticsearch::Dataset, '#search' do
     dataset.put(username: 'bob')
     dataset.put(username: 'alice')
 
-    refresh
+    dataset.refresh
   end
 
   it 'returns data matching query options' do

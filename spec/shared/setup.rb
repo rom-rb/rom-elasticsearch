@@ -13,8 +13,4 @@ RSpec.shared_context 'setup' do
   after do
     client.indices.delete(index: :users) if gateway.index?(:users)
   end
-
-  def refresh(index = :users)
-    client.indices.refresh(index: index)
-  end
 end

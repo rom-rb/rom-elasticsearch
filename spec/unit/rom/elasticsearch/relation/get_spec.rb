@@ -9,7 +9,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#get' do
     relation.command(:create).(id: 1, name: 'Jane')
     relation.command(:create).(id: 2, name: 'John')
 
-    refresh
+    relation.refresh
   end
 
   it 'returns user tuple by its id' do
