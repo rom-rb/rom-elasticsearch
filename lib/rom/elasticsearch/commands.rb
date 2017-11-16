@@ -12,11 +12,13 @@ module ROM
       class Create < ROM::Commands::Create
         # @api private
         def execute(attributes)
+          tuple = input[attributes]
+
           result =
             if _id
-              dataset.params(id: attributes.fetch(_id)).put(attributes.to_h)
+              dataset.params(id: tuple.fetch(_id)).put(tuple)
             else
-              dataset.put(attributes.to_h)
+              dataset.put(tuple)
             end
           [relation.get(result['_id']).one]
         end

@@ -18,6 +18,14 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
 
       expect(command.call(id: 1, name: 'Jane')).to eql(id: 1, name: 'Jane')
     end
+
+    it 'applies input function' do
+      command = relation.command(:create, result: :one)
+
+      input = double(:user, to_hash: { id: 1, name: 'Jane' })
+
+      expect(command.call(input)).to eql(id: 1, name: 'Jane')
+    end
   end
 
   describe ':delete' do
