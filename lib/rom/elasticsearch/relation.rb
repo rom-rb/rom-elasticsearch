@@ -67,7 +67,7 @@ module ROM
 
       # @api public
       def delete
-        dataset.delete_all
+        dataset.delete
       end
 
       # @api public

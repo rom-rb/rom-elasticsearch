@@ -12,9 +12,15 @@ RSpec.describe ROM::Elasticsearch::Relation, '#delete' do
     relation.refresh
   end
 
-  it 'deletes all matching data' do
+  it 'deletes all data' do
     relation.delete
 
     expect(relation.refresh.to_a).to be_empty
+  end
+
+  it 'deletes all data from a restricted relation' do
+    relation.get(2).delete
+
+    expect(relation.refresh.to_a).to eql([{ id: 1, name: 'Jane' }])
   end
 end

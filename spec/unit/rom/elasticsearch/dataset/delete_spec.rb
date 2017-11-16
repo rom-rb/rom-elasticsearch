@@ -8,7 +8,7 @@ RSpec.describe ROM::Elasticsearch::Dataset, '#delete' do
   it 'deletes data' do
     expect(dataset.to_a.size).to eql(3)
 
-    dataset.refresh.delete_all
+    dataset.refresh.delete
 
     dataset.refresh
 

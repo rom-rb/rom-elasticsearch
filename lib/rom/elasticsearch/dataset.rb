@@ -60,20 +60,15 @@ module ROM
         client.indices.get_mapping[index.to_s]['mappings'][type.to_s]
       end
 
-      # Delete by id
-      #
-      # @return [Hash]
-      #
-      # @api public
-      def delete
-        client.delete(params)
-      end
-
       # Delete everything matching configured params and body
       #
       # @api public
-      def delete_all
-        client.delete_by_query(**params, body: body.merge(ALL))
+      def delete
+        if body.empty? && params[:id]
+          client.delete(params)
+        elsif body.empty?
+          client.delete_by_query(params.merge(body: body.merge(ALL)))
+        end
       end
 
       # Materialize dataset
