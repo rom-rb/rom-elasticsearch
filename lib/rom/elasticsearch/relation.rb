@@ -41,6 +41,11 @@ module ROM
       end
 
       # @api public
+      def pluck(name)
+        map { |t| t[name] }
+      end
+
+      # @api public
       def get(id)
         new(dataset.get(id))
       end
