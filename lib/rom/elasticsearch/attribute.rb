@@ -6,17 +6,15 @@ module ROM
     #
     # @api public
     class Attribute < ROM::Attribute
+      INTERNAL_META_KEYS = %i[name source].freeze
+
       # Return ES mapping properties
       #
       # @return [Hash]
       #
       # @api public
-      def properties
-        if meta[:type]
-          { type: meta[:type] }
-        else
-          EMPTY_HASH
-        end
+      memoize def properties
+        type.meta.reject { |k, _| INTERNAL_META_KEYS.include?(k) }
       end
 
       # Return if an attribute has any ES mappings
