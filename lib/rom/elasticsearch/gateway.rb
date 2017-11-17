@@ -1,21 +1,23 @@
-require 'dry/core/inflector'
 require 'elasticsearch'
 require 'uri'
 
 require 'rom/gateway'
+require 'rom/support/inflector'
 require 'rom/elasticsearch/dataset'
 
 module ROM
   module Elasticsearch
-    # ElasticSearch gateway
+    # Elasticsearch gateway
     #
     # @example basic configuration
-    #   conf = ROM::Configuration.new(:elasticsearch, 'http://localhost:9200/rom-test')
+    #   conf = ROM::Configuration.new(:elasticsearch, 'http://localhost:9200')
     #
     #   class Posts < ROM::Relation[:elasticsearch]
     #     schema(:posts) do
     #       attribute :id, Types::Int
     #       attribute :title, Types::String
+    #
+    #       primary_key :id
     #     end
     #
     #     def like(title)
@@ -67,7 +69,7 @@ module ROM
       #
       # @api public
       def dataset(index)
-        Dataset.new(client, params: { index: index, type: Dry::Core::Inflector.singularize(index).to_sym })
+        Dataset.new(client, params: { index: index, type: Inflector.singularize(index).to_sym })
       end
       alias_method :[], :dataset
     end
