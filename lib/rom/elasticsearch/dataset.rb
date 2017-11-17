@@ -5,7 +5,14 @@ require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
-    # ElasticSearch dataset
+    # Elasticsearch dataset
+    #
+    # Uses an elasticsearch client object provided by the gateway, holds basic
+    # params with information about index name and type, and optional body for
+    # additional queries.
+    #
+    # Dataset object also provide meta information about indices, like custom
+    # settings and mappings.
     #
     # @api public
     class Dataset
@@ -31,7 +38,7 @@ module ROM
       #   @return [Hash] default body
       option :body, default: -> { EMPTY_HASH }
 
-      # Put new data
+      # Put new data under configured index
       #
       # @param [Hash] data
       #
@@ -60,7 +67,11 @@ module ROM
         client.indices.get_mapping[index.to_s]['mappings'][type.to_s]
       end
 
-      # Delete everything matching configured params and body
+      # Delete everything matching configured params and/or body
+      #
+      # If body is empty it *will delete everything**
+      #
+      # @return [Hash] raw response hash from the client
       #
       # @api public
       def delete
@@ -73,14 +84,20 @@ module ROM
         end
       end
 
-      # Materialize dataset
+      # Materialize the dataset
       #
       # @return [Array<Hash>]
+      #
+      # @api public
       def to_a
         to_enum.to_a
       end
 
       # Materialize and iterate over results
+      #
+      # @yieldparam [Hash]
+      #
+      # @raise [SearchError] in case of the client raising an exception
       #
       # @api public
       def each
@@ -92,6 +109,12 @@ module ROM
         raise SearchError.new(e, options)
       end
 
+      # Map dataset tuples
+      #
+      # @yieldparam [Hash]
+      #
+      # @return [Array]
+      #
       # @api public
       def map(&block)
         to_a.map(&block)
@@ -146,6 +169,8 @@ module ROM
       end
 
       # Refresh index
+      #
+      # @return [Dataset]
       #
       # @api public
       def refresh

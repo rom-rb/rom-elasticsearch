@@ -55,6 +55,8 @@ module ROM
 
       # Return true if a dataset with the given :index exists
       #
+      # @param [Symbol] index The name of the index
+      #
       # @return [Boolean]
       #
       # @api public
@@ -64,6 +66,8 @@ module ROM
       alias_method :index?, :dataset?
 
       # Get a dataset by its :index name
+      #
+      # @param [Symbol] index The name of the index
       #
       # @return [Dataset]
       #

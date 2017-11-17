@@ -2,6 +2,10 @@ require 'rom/elasticsearch/errors'
 
 module ROM
   module Elasticsearch
+    # Dataset's query methods
+    #
+    # @see Dataset
+    #
     # @api public
     module QueryMethods
       # Return a new dataset configured to search by :id
@@ -10,6 +14,8 @@ module ROM
       #
       # @return [Dataset]
       #
+      # @see Relation#get
+      #
       # @api public
       def get(id)
         params(id: id)
@@ -17,9 +23,11 @@ module ROM
 
       # Return a new dataset configured to search via new body options
       #
-      # @param [Integer] id
+      # @param [Hash] options Body options
       #
       # @return [Dataset]
+      #
+      # @see Relation#search
       #
       # @api public
       def search(options)
@@ -28,9 +36,11 @@ module ROM
 
       # Return a new dataset configured to search via :query_string body option
       #
-      # @param [Integer] id
+      # @param [String] expression A string query
       #
       # @return [Dataset]
+      #
+      # @see Relation#query_string
       #
       # @api public
       def query_string(expression)
@@ -39,9 +49,11 @@ module ROM
 
       # Return a new dataset configured to search via :query body option
       #
-      # @param [Integer] id
+      # @param [Hash] query A query hash
       #
       # @return [Dataset]
+      #
+      # @see Relation#query
       #
       # @api public
       def query(query)
