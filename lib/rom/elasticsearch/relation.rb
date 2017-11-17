@@ -17,6 +17,15 @@ module ROM
     #
     # Optionally, query DSL can be enabled via `:query_dsl` plugin.
     #
+    # @example setting up a relation
+    #   class Pages < ROM::Relation[:elasticsearch]
+    #     schema do
+    #       attribute :id, Types::ID
+    #       attribute :title, Types.Keyword
+    #       attribute :body, Types.Text(analyzer: "snowball")
+    #     end
+    #   end
+    #
     # @example using query DSL
     #   class Users < ROM::Relation[:elasticsearch]
     #     use :query_dsl
