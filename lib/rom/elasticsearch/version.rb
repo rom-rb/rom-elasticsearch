@@ -1,5 +1,5 @@
-module Rom
+module ROM
   module Elasticsearch
-    VERSION = "0.1.0"
+    VERSION = '0.1.0'.freeze
   end
 end
