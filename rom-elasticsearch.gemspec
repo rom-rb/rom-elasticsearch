@@ -5,12 +5,12 @@ require 'rom/elasticsearch/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'rom-elasticsearch'
-  spec.version       = Rom::Elasticsearch::VERSION
-  spec.authors       = ['Hannes Nevalainen']
-  spec.email         = ['hannes.nevalainen@me.com']
-  spec.summary       = %q{Experimental ROM adapter for Elasticsearch}
+  spec.version       = ROM::Elasticsearch::VERSION
+  spec.authors       = ['Hannes Nevalainen', 'Piotr Solnica']
+  spec.email         = ['hannes.nevalainen@me.com', 'piotr.solnica+oss@gmail.com']
+  spec.summary       = %q{ROM adapter for Elasticsearch}
   spec.description   = %q{}
-  spec.homepage      = ''
+  spec.homepage      = 'http://rom-rb.org'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -24,5 +24,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 1.6'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'inflecto'
 end
