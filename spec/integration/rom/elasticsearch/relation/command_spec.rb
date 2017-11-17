@@ -6,7 +6,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#command' do
   before do
     conf.relation(:users) do
       schema(:users) do
-        attribute :id,   ROM::Types::Int.meta(primary_key: true)
+        attribute :id,   ROM::Elasticsearch::Types::ID
         attribute :name, ROM::Types::String
       end
     end

@@ -1,4 +1,5 @@
 require 'rom/relation'
+require 'rom/elasticsearch/types'
 require 'rom/elasticsearch/schema'
 require 'rom/elasticsearch/attribute'
 
@@ -33,6 +34,8 @@ module ROM
     #
     # @api public
     class Relation < ROM::Relation
+      include ROM::Elasticsearch
+
       adapter :elasticsearch
 
       # @!method self.index_settings

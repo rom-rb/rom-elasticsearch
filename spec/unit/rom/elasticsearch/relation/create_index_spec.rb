@@ -14,7 +14,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
       before do
         conf.relation(:users) do
           schema do
-            attribute :id, ROM::Types::Int
+            attribute :id, ROM::Elasticsearch::Types::ID
             attribute :name, ROM::Types::String
           end
         end
@@ -51,8 +51,9 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
       before do
         conf.relation(:users) do
           schema do
-            attribute :id, ROM::Types::Int
-            attribute :name, ROM::Types::String.meta(type: "text")
+            attribute :id, ROM::Elasticsearch::Types::ID
+            attribute :name, ROM::Elasticsearch::Types.Keyword
+            attribute :desc, ROM::Elasticsearch::Types.Text(analyzer: "snowball")
           end
 
           index_settings number_of_shards: 2
@@ -63,7 +64,11 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
         relation.create_index
 
         expect(gateway.index?(:users)).to be(true)
-        expect(relation.dataset.mappings).to eql("properties" => { "name" => { "type" => "text" } })
+
+        expect(relation.dataset.mappings).
+          to eql("properties" => {
+                   "name" => { "type" => "keyword" },
+                   "desc" => { "type" => "text", "analyzer" => "snowball" }})
       end
     end
   end

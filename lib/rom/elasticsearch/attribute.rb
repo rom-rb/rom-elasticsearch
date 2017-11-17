@@ -6,7 +6,7 @@ module ROM
     #
     # @api public
     class Attribute < ROM::Attribute
-      INTERNAL_META_KEYS = %i[name source].freeze
+      INTERNAL_META_KEYS = %i[name source primary_key].freeze
 
       # Return ES mapping properties
       #
