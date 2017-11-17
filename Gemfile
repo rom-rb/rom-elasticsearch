@@ -14,3 +14,7 @@ gem 'simplecov', require: false
 gem 'pry-byebug', platform: :mri
 gem 'pry', platform: :jruby
 gem 'elasticsearch-dsl'
+
+group :tools do
+  gem 'kramdown' # for yard
+end
