@@ -50,7 +50,7 @@ module ROM
       # @api private
       def initialize(uri, log: false)
         @url = URI.parse(uri)
-        @client = ::Elasticsearch::Client.new(host: url.select(:host, :port).join(":"), log: log)
+        @client = ::Elasticsearch::Client.new(url: url, log: log)
       end
 
       # Return true if a dataset with the given :index exists
