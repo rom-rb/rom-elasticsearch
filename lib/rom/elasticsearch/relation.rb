@@ -1,4 +1,5 @@
 require 'rom/relation'
+require 'rom/elasticsearch/relation/loaded'
 require 'rom/elasticsearch/types'
 require 'rom/elasticsearch/schema'
 require 'rom/elasticsearch/attribute'
@@ -110,6 +111,15 @@ module ROM
             }
           } }.freeze
       )
+
+      # Load a relation
+      #
+      # @return [Loaded]
+      #
+      # @api public
+      def call
+        Loaded.new(new(dataset.call))
+      end
 
       # Map indexed data
       #
