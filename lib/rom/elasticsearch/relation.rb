@@ -97,6 +97,14 @@ module ROM
       # whereas in core, it is only used when there's at least one read-type
       option :output_schema, default: -> { schema.to_output_hash }
 
+      # @attribute [r] current_page
+      #   @return [Integer] Currently set page
+      option :current_page, default: -> { 1 }
+
+      # @attribute [r] per_page
+      #   @return [Integer] Number of results per page
+      option :per_page, reader: false, optional: true, default: -> { 10 }
+
       # Default index settings that can be overridden
       index_settings(
         { number_of_shards: 1,
@@ -130,6 +138,32 @@ module ROM
       # @api public
       def order(*attrs)
         new(dataset.sort(*schema.project(*attrs).map(&:to_sort_expr)))
+      end
+
+      # Return a relation with page number set
+      #
+      # @param [Integer] num
+      #
+      # @return [Relation]
+      #
+      # @api public
+      def page(num)
+        new(dataset.from((num - 1) * per_page), current_page: num)
+      end
+
+      # Return a relation with per-page number set
+      #
+      # @param [Integer] num
+      #
+      # @return [Relation]
+      #
+      # @api public
+      def per_page(num = Undefined)
+        if num.equal?(Undefined)
+          options[:per_page]
+        else
+          new(dataset.size(num), per_page: num)
+        end
       end
 
       # Map indexed data

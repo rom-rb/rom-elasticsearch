@@ -194,6 +194,28 @@ module ROM
         params(sort: fields.join(SORT_VALUES_SEPARATOR))
       end
 
+      # Return dataset with :from set
+      #
+      # @param [Integer] num
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def from(num)
+        params(from: num)
+      end
+
+      # Return dataset with :size set
+      #
+      # @param [Integer] num
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def size(num)
+        params(size: num)
+      end
+
       # Create an index
       #
       # @param [Hash] opts ES options
