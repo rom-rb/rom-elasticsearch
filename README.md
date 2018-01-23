@@ -9,8 +9,8 @@
 [![Gem Version](https://badge.fury.io/rb/rom-elasticsearch.svg)][gem]
 [![Build Status](https://travis-ci.org/rom-rb/rom-elasticsearch.svg?branch=master)][travis]
 [![Dependency Status](https://gemnasium.com/rom-rb/rom-elasticsearch.svg)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/gpa.svg)][codeclimate]
-[![Test Coverage](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/coverage.svg)][codeclimate]
+[![Maintainability](https://api.codeclimate.com/v1/badges/dc6780aac2d99766b141/maintainability)](https://codeclimate.com/github/rom-rb/rom-elasticsearch/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/dc6780aac2d99766b141/test_coverage)](https://codeclimate.com/github/rom-rb/rom-elasticsearch/test_coverage)
 [![Inline docs](http://inch-ci.org/github/rom-rb/rom-elasticsearch.svg?branch=master)][inchpages]
 
 ElasticSearch support for [rom-rb](https://github.com/rom-rb/rom).
