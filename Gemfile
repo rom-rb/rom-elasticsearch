@@ -11,8 +11,7 @@ end
 gem 'codeclimate-test-reporter', require: false
 gem 'simplecov', require: false
 
-gem 'pry-byebug', platform: :mri
-gem 'pry', platform: :jruby
+gem 'byebug', platform: :mri
 gem 'elasticsearch-dsl'
 
 group :tools do

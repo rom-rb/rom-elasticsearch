@@ -38,6 +38,10 @@ module ROM
       #   @return [Hash] default body
       option :body, default: -> { EMPTY_HASH }
 
+      # @!attribute [r] response
+      #   @return [Hash] memoized response from the client
+      option :response, optional: true, reader: false
+
       # Put new data under configured index
       #
       # @param [Hash] data
@@ -200,6 +204,15 @@ module ROM
         client.indices.delete(params.merge(opts))
       end
 
+      # Return a dataset with pre-set client response
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def call
+        with(response: response)
+      end
+
       private
 
       # Return results of a query based on configured params and body
@@ -211,8 +224,13 @@ module ROM
         if params[:id]
           [client.get(params)]
         else
-          client.search(**params, body: body).fetch('hits').fetch('hits')
+          response.fetch('hits').fetch('hits')
         end
+      end
+
+      # @api private
+      def response
+        options[:response] || client.search(**params, body: body)
       end
     end
   end

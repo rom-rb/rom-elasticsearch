@@ -15,9 +15,8 @@ if RUBY_ENGINE == 'ruby' && ENV['COVERAGE'] == 'true'
 end
 
 begin
-  require 'pry-byebug'
+  require 'byebug'
 rescue LoadError
-  require 'pry'
 end
 
 require 'rom-elasticsearch'
