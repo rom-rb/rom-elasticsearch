@@ -7,6 +7,8 @@ services:
 bundler_args: --without yard guard benchmarks tools
 before_script:
   - curl -XPUT http://localhost:9200/rom-test
+after_success:
+  - '[ -d coverage ] && codeclimate-test-reporter'
 script: "bundle exec rake ci"
 rvm:
   - 2.5.0
