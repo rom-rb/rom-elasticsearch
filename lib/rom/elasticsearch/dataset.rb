@@ -20,6 +20,9 @@ module ROM
 
       include QueryMethods
 
+      # Sort values separator
+      SORT_VALUES_SEPARATOR = ','.freeze
+
       # Default query options
       ALL = { query: { match_all: EMPTY_HASH } }.freeze
 
@@ -180,6 +183,37 @@ module ROM
       def refresh
         client.indices.refresh(index: index)
         self
+      end
+
+      # Return dataset with :sort set
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def sort(*fields)
+        params(sort: fields.join(SORT_VALUES_SEPARATOR))
+      end
+
+      # Return dataset with :from set
+      #
+      # @param [Integer] num
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def from(num)
+        params(from: num)
+      end
+
+      # Return dataset with :size set
+      #
+      # @param [Integer] num
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def size(num)
+        params(size: num)
       end
 
       # Create an index
