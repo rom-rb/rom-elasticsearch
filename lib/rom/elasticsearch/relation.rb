@@ -121,6 +121,17 @@ module ROM
         Loaded.new(new(dataset.call))
       end
 
+      # Return a relation with changed sorting logic
+      #
+      # @param [Array<Symbol,Attribute>] attrs
+      #
+      # @return [Relation]
+      #
+      # @api public
+      def order(*attrs)
+        new(dataset.sort(*schema.project(*attrs).map(&:to_sort_expr)))
+      end
+
       # Map indexed data
       #
       # @yieldparam [Hash,ROM::Struct]
