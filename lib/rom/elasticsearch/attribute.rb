@@ -6,7 +6,7 @@ module ROM
     #
     # @api public
     class Attribute < ROM::Attribute
-      INTERNAL_META_KEYS = %i[name source primary_key].freeze
+      INTERNAL_META_KEYS = %i[name source primary_key read].freeze
       DEFAULT_SORT_DIRECTION = 'asc'.freeze
 
       # Return ES mapping properties
