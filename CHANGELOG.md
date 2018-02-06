@@ -4,7 +4,7 @@
 
 * Using `read` types in schemas no longer breaks indexing (solnic)
 
-[Compare v0.2.0...v0.2.1](https://github.com/rom-rb/rom/compare/v0.2.0...v0.2.1)
+[Compare v0.2.0...v0.2.1](https://github.com/rom-rb/rom-elasticsearch/compare/v0.2.0...v0.2.1)
 
 # v0.2.0 2018-01-23
 
@@ -15,7 +15,7 @@
 * `Relation#per_page` which sets `:size` (solnic)
 * `Relation#call` returns custom `ROM::Elasticsearch::Relation::Loaded` object, which provides access to `#total_hits` and raw client response (solnic)
 
-[Compare v0.1.1...v0.2.0](https://github.com/rom-rb/rom/compare/v0.1.1...v0.2.0)
+[Compare v0.1.1...v0.2.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.1.1...v0.2.0)
 
 # v0.1.1 2017-11-18
 
