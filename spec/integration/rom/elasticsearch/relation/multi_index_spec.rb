@@ -22,6 +22,8 @@ RSpec.describe ROM::Elasticsearch::Relation, '.schema' do
     end
 
     conf.relation(:search) do
+      multi_index_types %i[post page]
+
       schema(multi: true) do
         attribute :id, ROM::Elasticsearch::Types::ID
         attribute :title, ROM::Elasticsearch::Types.Text
