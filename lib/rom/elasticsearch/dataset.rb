@@ -41,9 +41,30 @@ module ROM
       #   @return [Hash] default body
       option :body, default: -> { EMPTY_HASH }
 
+      # @!attribute [r] include_metadata
+      #   @return [Bool]
+      option :include_metadata, default: -> { false }
+
       # @!attribute [r] response
       #   @return [Hash] memoized response from the client
       option :response, optional: true, reader: false
+
+      # @!attribute [r] tuple_proc
+      #   @return [Proc] low-level tuple processing function used in #each
+      attr_reader :tuple_proc
+
+      # default tuple proc which extracts raw source data from response item
+      TUPLE_PROC = -> t { t[SOURCE_KEY] }
+
+      # tuple proc used when :include_metadata is enabled, resulting tuples
+      # will include raw response hash under _metadata key
+      TUPLE_PROC_WITH_METADATA = -> t { TUPLE_PROC[t].merge(_metadata: t) }
+
+      # @api private
+      def initialize(*args)
+        super
+        @tuple_proc = options[:include_metadata] ? TUPLE_PROC_WITH_METADATA : TUPLE_PROC
+      end
 
       # Put new data under configured index
       #
@@ -109,9 +130,7 @@ module ROM
       # @api public
       def each
         return to_enum unless block_given?
-        view.each do |result|
-          yield(result[SOURCE_KEY])
-        end
+        view.each { |result| yield(tuple_proc[result]) }
       rescue ::Elasticsearch::Transport::Transport::Error => e
         raise SearchError.new(e, options)
       end
