@@ -120,6 +120,17 @@ module ROM
           } }.freeze
       )
 
+      # Define a schema for the relation
+      #
+      # @return [self]
+      def self.schema(dataset = nil, multi: false, **opts, &block)
+        if multi
+          super(:_all, **opts, &block)
+        else
+          super(dataset, **opts, &block)
+        end
+      end
+
       # Load a relation
       #
       # @return [Loaded]
