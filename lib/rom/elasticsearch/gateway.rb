@@ -73,9 +73,16 @@ module ROM
       #
       # @api public
       def dataset(index)
-        Dataset.new(client, params: { index: index, type: Inflector.singularize(index).to_sym })
+        Dataset.new(client, params: params(index))
       end
       alias_method :[], :dataset
+
+      private
+
+      # @api private
+      def params(index)
+        index == :_all ? { index: index } : { index: index, type: Inflector.singularize(index).to_sym }
+      end
     end
   end
 end
