@@ -4,6 +4,7 @@ require 'uri'
 require 'rom/gateway'
 require 'rom/support/inflector'
 require 'rom/elasticsearch/dataset'
+require 'rom/elasticsearch/index_name'
 
 module ROM
   module Elasticsearch
@@ -73,7 +74,8 @@ module ROM
       #
       # @api public
       def dataset(index)
-        Dataset.new(client, params: { index: index, type: Inflector.singularize(index).to_sym })
+        idx_name = IndexName[index]
+        Dataset.new(client, params: { index: idx_name.to_sym, type: idx_name.type })
       end
       alias_method :[], :dataset
     end

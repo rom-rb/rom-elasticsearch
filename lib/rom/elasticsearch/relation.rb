@@ -1,4 +1,6 @@
 require 'rom/relation'
+
+require 'rom/elasticsearch/index_name'
 require 'rom/elasticsearch/relation/loaded'
 require 'rom/elasticsearch/types'
 require 'rom/elasticsearch/schema'
@@ -90,6 +92,25 @@ module ROM
       #     @param [Hash] index_settings_hash
       defines :index_settings
 
+      # @!method self.multi_index_types
+      #   Manage index types for multi-index search
+      #
+      #   @overload multi_index_types
+      #     @return [Array<Symbol>] a list of index types
+      #
+      #   @overload multi_index_types(types)
+      #     @return [Array<Symbol>] a list of index types
+      #
+      #     @example
+      #       class Search < ROM::Relation[:elasticsearch]
+      #         multi_index_types :pages, :posts
+      #
+      #         schema(multi: true) do
+      #           # define your schema
+      #         end
+      #       end
+      defines :multi_index_types
+
       schema_class Elasticsearch::Schema
       schema_attr_class Elasticsearch::Attribute
 
@@ -119,6 +140,17 @@ module ROM
             }
           } }.freeze
       )
+
+      # Define a schema for the relation
+      #
+      # @return [self]
+      def self.schema(dataset = nil, multi: false, **opts, &block)
+        if multi
+          super(IndexName[:_all, multi_index_types], **opts, &block)
+        else
+          super(dataset, **opts, &block)
+        end
+      end
 
       # Load a relation
       #
@@ -286,7 +318,7 @@ module ROM
       #
       # @api private
       def index_params
-        { index: name.dataset,
+        { index: name.dataset.to_sym,
           body: {
             settings: self.class.index_settings,
             mappings: { dataset.type => { properties: schema.to_properties } } } }
