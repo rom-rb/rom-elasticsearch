@@ -3,6 +3,7 @@
 ### Added
 
 * Support for multi-index relations via `schema(multi: true)` (solnic)
+* Datasets can be configured to include `_metadata` in resulting tuples (solnic)
 
 [Compare v0.2.1...v0.3.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.2.1...v0.3.0)
 
