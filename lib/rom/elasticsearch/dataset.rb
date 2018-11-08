@@ -297,10 +297,10 @@ module ROM
       # @api private
       def scroll_response
         Enumerator.new do |y|
-          _response = response
+          current_response = response
 
           loop do
-            results = _response.fetch('hits').fetch('hits')
+            results = current_response.fetch('hits').fetch('hits')
 
             if results.empty?
               break
@@ -310,11 +310,11 @@ module ROM
               y.yield(result)
             end
 
-            scroll_id = _response.fetch('_scroll_id')
+            scroll_id = current_response.fetch('_scroll_id')
 
-            _response = client.scroll(
+            current_response = client.scroll(
               scroll_id: scroll_id,
-              scroll: params[:scroll],
+              scroll: params[:scroll]
             )
           end
         end
