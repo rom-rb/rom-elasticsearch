@@ -198,6 +198,17 @@ module ROM
         end
       end
 
+      # Return a relation with scroll set
+      #
+      # @param [String] ttl
+      #
+      # @return [Relation]
+      #
+      # @api public
+      def scroll(ttl)
+        new(dataset.scroll(ttl))
+      end
+
       # Map indexed data
       #
       # @yieldparam [Hash,ROM::Struct]

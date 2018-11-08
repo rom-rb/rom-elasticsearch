@@ -235,6 +235,17 @@ module ROM
         params(size: num)
       end
 
+      # Return dataset with :scroll set
+      #
+      # @param [String] ttl
+      #
+      # @return [Dataset]
+      #
+      # @api public
+      def scroll(ttl)
+        params(scroll: ttl)
+      end
+
       # Create an index
       #
       # @param [Hash] opts ES options
@@ -276,8 +287,36 @@ module ROM
       def view
         if params[:id]
           [client.get(params)]
+        elsif params[:scroll]
+          scroll_response
         else
           response.fetch('hits').fetch('hits')
+        end
+      end
+
+      # @api private
+      def scroll_response
+        Enumerator.new do |y|
+          _response = response
+
+          loop do
+            results = _response.fetch('hits').fetch('hits')
+
+            if results.empty?
+              break
+            end
+
+            results.each do |result|
+              y.yield(result)
+            end
+
+            scroll_id = _response.fetch('_scroll_id')
+
+            _response = client.scroll(
+              scroll_id: scroll_id,
+              scroll: params[:scroll],
+            )
+          end
         end
       end
 
