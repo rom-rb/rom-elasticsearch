@@ -17,7 +17,7 @@ module ROM
       #
       # @api public
       def self.Keyword(meta = {})
-        String.meta(type: "keyword").meta(meta)
+        String.meta(type: 'keyword', **meta)
       end
 
       # Define a keyword attribute type
@@ -26,7 +26,7 @@ module ROM
       #
       # @api public
       def self.Text(meta = {})
-        String.meta(type: "text").meta(meta)
+        String.meta(type: 'text', **meta)
       end
     end
   end
