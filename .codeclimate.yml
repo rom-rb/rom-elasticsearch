@@ -1,6 +1,5 @@
-engines:
+version: "2"
+
+plugins:
   rubocop:
     enabled: true
-ratings:
-  paths:
-    - lib/**
