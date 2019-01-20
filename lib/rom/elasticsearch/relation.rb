@@ -310,6 +310,53 @@ module ROM
         new(dataset.refresh)
       end
 
+      # Return count of documents in the index
+      #
+      # @example
+      #   users.count
+      #   GET /_count
+      #
+      # @example
+      #   users.search(<query>).count
+      #   GET /_count?q=<query>
+      #
+      # @return [Integer]
+      #
+      # @api public
+      def count
+        dataset.client.count(
+          index: dataset.index,
+          type: dataset.type,
+          body: dataset.body
+        )['count']
+      end
+
+      # Restrict relation data by offset
+      #
+      # @example
+      #   users.search.from(100)
+      #   GET /_search?from=100
+      #
+      # @return [Integer]
+      #
+      # @api public
+      def from(value)
+        new(dataset.from(value))
+      end
+
+      # Restrict relation data by limit the count of documents
+      #
+      # @example
+      #   users.search.size(100)
+      #   GET /_search?size=100
+      #
+      # @return [Integer]
+      #
+      # @api public
+      def size(value)
+        new(dataset.size(value))
+      end
+
       private
 
       # Dataset index params based on relation configuration
