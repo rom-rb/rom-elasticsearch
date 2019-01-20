@@ -11,7 +11,7 @@ module ROM
       # Default integer primary key
       ID = Int.meta(primary_key: true)
 
-      # Define a keywoard attribute type
+      # Define a keyword attribute type
       #
       # @return [Dry::Types::Type]
       #
@@ -20,7 +20,7 @@ module ROM
         String.meta(type: "keyword").meta(meta)
       end
 
-      # Define a keywoard attribute type
+      # Define a keyword attribute type
       #
       # @return [Dry::Types::Type]
       #
