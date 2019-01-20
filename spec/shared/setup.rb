@@ -1,11 +1,11 @@
 RSpec.shared_context 'setup' do
   let(:uri) { "http://127.0.0.1:9200" }
 
-  let(:conf) { ROM::Configuration.new(:elasticsearch, uri) }
+  let(:conf) { ROM::Configuration.new(:elasticsearch, client) }
   let(:container) { ROM.container(conf) }
 
   let(:gateway) { conf.gateways[:default] }
-  let(:client) { gateway.client }
+  let(:client) { ::Elasticsearch::Client.new(url: uri) }
 
   let(:relations) { container[:relations] }
   let(:commands) { container[:commands] }

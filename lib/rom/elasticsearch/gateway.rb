@@ -13,6 +13,7 @@ module ROM
     # Elasticsearch gateway
     #
     # @example basic configuration
+    #   client = Elasticsearch::Client.new('http://localhost:9200')
     #   conf = ROM::Configuration.new(:elasticsearch, 'http://localhost:9200')
     #
     #   class Posts < ROM::Relation[:elasticsearch]
@@ -42,18 +43,13 @@ module ROM
     class Gateway < ROM::Gateway
       adapter :elasticsearch
 
-      # @!attribute [r] url
-      #   @return [URI] Connection URL
-      attr_reader :url
-
       # @!attribute [r] client
       #   @return [::Elasticsearch::Client] configured ES client
       attr_reader :client
 
       # @api private
-      def initialize(uri, log: false)
-        @url = URI.parse(uri)
-        @client = ::Elasticsearch::Client.new(url: url, log: log)
+      def initialize(client)
+        @client = client
       end
 
       # Return true if a dataset with the given :index exists
