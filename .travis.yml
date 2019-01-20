@@ -8,12 +8,13 @@ bundler_args: --without yard guard benchmarks tools
 before_script:
   - curl -XPUT http://localhost:9200/rom-test
 after_success:
-  - '[ -d coverage ] && bundle exec codeclimate-test-reporter'
+  - "[ -d coverage ] && bundle exec codeclimate-test-reporter"
 script: "bundle exec rake ci"
 rvm:
-  - 2.5.0
-  - 2.4.3
-  - 2.3.6
+  - 2.6
+  - 2.5
+  - 2.4
+  - 2.3
   - jruby-9.1.12.0
 env:
   global:
