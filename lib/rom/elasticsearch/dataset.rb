@@ -19,6 +19,7 @@ module ROM
       extend Initializer
 
       include QueryMethods
+      include ScrollMethods
 
       # Sort values separator
       SORT_VALUES_SEPARATOR = ','.freeze
@@ -288,35 +289,9 @@ module ROM
         if params[:id]
           [client.get(params)]
         elsif params[:scroll]
-          scroll_response
+          scroll_enumerator(client, response)
         else
           response.fetch('hits').fetch('hits')
-        end
-      end
-
-      # @api private
-      def scroll_response
-        Enumerator.new do |y|
-          current_response = response
-
-          loop do
-            results = current_response.fetch('hits').fetch('hits')
-
-            if results.empty?
-              break
-            end
-
-            results.each do |result|
-              y.yield(result)
-            end
-
-            scroll_id = current_response.fetch('_scroll_id')
-
-            current_response = client.scroll(
-              scroll_id: scroll_id,
-              scroll: params[:scroll]
-            )
-          end
         end
       end
 
