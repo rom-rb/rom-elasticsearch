@@ -7,8 +7,11 @@ services:
 bundler_args: --without yard guard benchmarks tools
 before_script:
   - curl -XPUT http://localhost:9200/rom-test
-after_success:
-  - "[ -d coverage ] && bundle exec codeclimate-test-reporter"
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+after_script:
+  - "[ -d coverage ] && ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 script: "bundle exec rake ci"
 rvm:
   - 2.6

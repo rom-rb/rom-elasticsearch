@@ -8,7 +8,6 @@ gem 'rom', git: 'https://github.com/rom-rb/rom', branch: 'master' do
   gem 'rom-mapper'
 end
 
-gem 'codeclimate-test-reporter', require: false
 gem 'simplecov', require: false
 
 gem 'byebug', platform: :mri
