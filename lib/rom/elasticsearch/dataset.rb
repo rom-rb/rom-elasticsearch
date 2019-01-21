@@ -1,6 +1,7 @@
 require 'rom/initializer'
 
 require 'rom/elasticsearch/query_methods'
+require 'rom/elasticsearch/scroll_methods'
 require 'rom/elasticsearch/errors'
 
 module ROM
@@ -234,17 +235,6 @@ module ROM
       # @api public
       def size(num)
         params(size: num)
-      end
-
-      # Return dataset with :scroll set
-      #
-      # @param [String] ttl
-      #
-      # @return [Dataset]
-      #
-      # @api public
-      def scroll(ttl)
-        params(scroll: ttl)
       end
 
       # Create an index
