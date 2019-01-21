@@ -6,7 +6,7 @@ module ROM
     #
     # @see Dataset
     #
-    # @api public
+    # @api private
     module ScrollMethods
       # @api private
       def scroll_enumerator(client, response)
