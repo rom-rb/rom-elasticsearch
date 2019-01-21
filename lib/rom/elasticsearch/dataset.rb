@@ -1,6 +1,7 @@
 require 'rom/initializer'
 
 require 'rom/elasticsearch/query_methods'
+require 'rom/elasticsearch/scroll_methods'
 require 'rom/elasticsearch/errors'
 
 module ROM
@@ -19,6 +20,7 @@ module ROM
       extend Initializer
 
       include QueryMethods
+      include ScrollMethods
 
       # Sort values separator
       SORT_VALUES_SEPARATOR = ','.freeze
@@ -276,6 +278,8 @@ module ROM
       def view
         if params[:id]
           [client.get(params)]
+        elsif params[:scroll]
+          scroll_enumerator(client, response)
         else
           response.fetch('hits').fetch('hits')
         end
