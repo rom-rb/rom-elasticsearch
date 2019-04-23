@@ -4,7 +4,7 @@ RSpec.shared_context 'users' do
   before do
     conf.relation(:users) do
       schema(:users) do
-        attribute :id, ROM::Types::Int
+        attribute :id, ROM::Types::Integer
         attribute :name, ROM::Types::String
 
         primary_key :id
