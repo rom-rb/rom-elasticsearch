@@ -9,7 +9,7 @@ module ROM
       include ROM::Types
 
       # Default integer primary key
-      ID = Int.meta(primary_key: true)
+      ID = Integer.meta(primary_key: true)
 
       # Define a keyword attribute type
       #

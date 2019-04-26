@@ -19,7 +19,9 @@ module ROM
       #
       # @api private
       def to_output_hash
-        Types::Hash.symbolized(map { |attr| [attr.key, attr.to_read_type] }.to_h)
+        Types::Hash
+          .schema(map { |attr| [attr.key, attr.to_read_type] }.to_h)
+          .with_key_transform(&:to_sym)
       end
     end
   end

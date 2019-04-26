@@ -31,7 +31,7 @@ RSpec.describe ROM::Elasticsearch::Relation, '#create_index' do
       before do
         conf.relation(:users) do
           schema do
-            attribute :id, ROM::Types::Int
+            attribute :id, ROM::Types::Integer
             attribute :name, ROM::Types::String
           end
 

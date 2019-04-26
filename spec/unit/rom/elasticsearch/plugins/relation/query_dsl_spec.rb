@@ -9,8 +9,8 @@ RSpec.describe ROM::Elasticsearch::Relation, '#search' do
   before do
     conf.relation(:users) do
       schema do
-        attribute :id, ROM::Types::Int.meta(type: "integer")
-        attribute :name, ROM::Types::Int.meta(type: "text")
+        attribute :id, ROM::Types::Integer.meta(type: "integer")
+        attribute :name, ROM::Types::Integer.meta(type: "text")
       end
 
       use :query_dsl
