@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rom'
+require 'rom/core'
 
 require 'rom/elasticsearch/version'
 require 'rom/elasticsearch/gateway'
