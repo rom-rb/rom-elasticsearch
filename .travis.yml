@@ -14,9 +14,9 @@ after_script:
   - "[ -d coverage ] && ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 script: "bundle exec rake ci"
 rvm:
-  - 2.6.0
-  - 2.5.3
-  - 2.4.5
+  - 2.6.3
+  - 2.5.5
+  - 2.4.6
   - jruby-head
 env:
   global:
