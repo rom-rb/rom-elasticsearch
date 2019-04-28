@@ -5,6 +5,10 @@
 - New relation methods: `#count`, `#from` and `#size` (v-kolesnikov)
 - Scroll API (hpetru)
 
+### Changed
+
+- Updated to work with `rom ~> 5.0` (v-kolesnikov)
+
 [Compare v0.3.0...v0.4.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.3.0...v0.4.0)
 
 # v0.3.0 2018-03-12
