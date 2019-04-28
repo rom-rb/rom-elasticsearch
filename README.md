@@ -2,20 +2,22 @@
 [travis]: https://travis-ci.org/rom-rb/rom-elasticsearch
 [codeclimate]: https://codeclimate.com/github/rom-rb/rom-elasticsearch
 [inchpages]: http://inch-ci.org/github/rom-rb/rom-elasticsearch
+[chat]: https://rom-rb.zulipchat.com
 
-# rom-elasticsearch
+# rom-elasticsearch [![Join the chat at https://rom-rb.zulipchat.com](https://img.shields.io/badge/rom--rb-join%20chat-942283.svg)][chat]
 
 [![Gem Version](https://badge.fury.io/rb/rom-elasticsearch.svg)][gem]
 [![Build Status](https://travis-ci.org/rom-rb/rom-elasticsearch.svg?branch=master)][travis]
-[![Maintainability](https://api.codeclimate.com/v1/badges/dc6780aac2d99766b141/maintainability)](https://codeclimate.com/github/rom-rb/rom-elasticsearch/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/dc6780aac2d99766b141/test_coverage)](https://codeclimate.com/github/rom-rb/rom-elasticsearch/test_coverage)
+[![Code Climate](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/gpa.svg)][codeclimate]
+[![Test Coverage](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/coverage.svg)][codeclimate]
 [![Inline docs](http://inch-ci.org/github/rom-rb/rom-elasticsearch.svg?branch=master)][inchpages]
 
-ElasticSearch support for [rom-rb](https://github.com/rom-rb/rom).
+Elasticsearch support for [rom-rb](https://github.com/rom-rb/rom).
 
 Resources:
 
-- [API Documentation](http://api.rom-rb.org/rom-elasticsearch)
+- [User Documentation](http://rom-rb.org/learn/elasticsearch/)
+- [API Documentation](http://rubydoc.info/gems/rom-elasticsearch)
 
 ## Installation
 
