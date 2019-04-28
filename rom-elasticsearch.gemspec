@@ -10,11 +10,11 @@ Gem::Specification.new do |spec|
   spec.email         = ['hannes.nevalainen@me.com', 'piotr.solnica+oss@gmail.com']
   spec.summary       = %q{ROM adapter for Elasticsearch}
   spec.description   = %q{}
-  spec.homepage      = 'http://rom-rb.org'
+  spec.homepage      = 'https://rom-rb.org'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.files         = Dir['CHANGELOG.md', 'LICENSE.txt', 'README.md', 'lib/**/*']
+  spec.executables   = []
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
