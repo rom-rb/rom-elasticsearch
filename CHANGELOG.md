@@ -1,11 +1,11 @@
-# v0.4.0 to-be-released
+# v0.4.0 2019-04-28
 
 ### Added
 
 - New relation methods: `#count`, `#from` and `#size` (v-kolesnikov)
 - Scroll API (hpetru)
 
-[Compare v0.3.0...master](https://github.com/rom-rb/rom-elasticsearch/compare/v0.3.0...master)
+[Compare v0.3.0...v0.4.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.3.0...v0.4.0)
 
 # v0.3.0 2018-03-12
 
