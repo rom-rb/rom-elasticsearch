@@ -16,7 +16,6 @@ Elasticsearch support for [rom-rb](https://github.com/rom-rb/rom).
 
 Resources:
 
-- [User Documentation](http://rom-rb.org/learn/elasticsearch/)
 - [API Documentation](http://rubydoc.info/gems/rom-elasticsearch)
 
 ## Installation
