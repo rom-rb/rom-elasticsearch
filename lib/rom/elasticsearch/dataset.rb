@@ -65,7 +65,7 @@ module ROM
       TUPLE_PROC_WITH_METADATA = -> t { TUPLE_PROC[t].merge(_metadata: t) }
 
       # @api private
-      def initialize(*args)
+      def initialize(*args, **kwargs)
         super
         @tuple_proc = options[:include_metadata] ? TUPLE_PROC_WITH_METADATA : TUPLE_PROC
       end
