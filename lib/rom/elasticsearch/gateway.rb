@@ -38,22 +38,27 @@ module ROM
     #
     #   posts.like('Hello').first
     #
-    # @example use an existing client
+    # @example using an existing client
     #   client = Elasticsearch::Client.new('http://localhost:9200')
-    #   conf = ROM::Configuration.new(:elasticsearch, client)
+    #   conf = ROM::Configuration.new(:elasticsearch, client: client)
     #
     # @api public
     class Gateway < ROM::Gateway
+      extend ROM::Initializer
+
       adapter :elasticsearch
+
+      # @!attribute [r] url
+      #   @return [URI] Connection URL
+      attr_reader :url
 
       # @!attribute [r] client
       #   @return [::Elasticsearch::Client] configured ES client
       attr_reader :client
 
-      # @api private
-      def initialize(uri, *_args)
-        @client = connect(uri)
-      end
+      param :uri, default: proc { nil }
+      option :client, default: -> { ::Elasticsearch::Client.new(url: uri, log: log) }
+      option :log, default: -> { false }
 
       # Return true if a dataset with the given :index exists
       #
@@ -79,22 +84,6 @@ module ROM
         Dataset.new(client, params: { index: idx_name.to_sym, type: idx_name.type })
       end
       alias_method :[], :dataset
-
-      private
-
-      # Connect to Elasticsearch cluster or reuse an existing client
-      #
-      # @return [::Elasticsearch::Client] a connection client
-      #
-      # @api private
-      def connect(uri)
-        case uri
-        when ::Elasticsearch::Transport::Client
-          uri
-        when String
-          ::Elasticsearch::Client.new(url: uri)
-        end
-      end
     end
   end
 end
