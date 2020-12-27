@@ -84,6 +84,10 @@ module ROM
         Dataset.new(client, params: { index: idx_name.to_sym, type: idx_name.type })
       end
       alias_method :[], :dataset
+
+      def client
+        @_client ||= @client.dup
+      end
     end
   end
 end
