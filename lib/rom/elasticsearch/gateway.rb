@@ -60,6 +60,12 @@ module ROM
       option :client, default: -> { ::Elasticsearch::Client.new(url: uri, log: log) }
       option :log, default: -> { false }
 
+      # @api private
+      def initialize(*args, **kwargs)
+        super
+        @client = @client.dup
+      end
+
       # Return true if a dataset with the given :index exists
       #
       # @param [Symbol] index The name of the index
@@ -84,10 +90,6 @@ module ROM
         Dataset.new(client, params: { index: idx_name.to_sym, type: idx_name.type })
       end
       alias_method :[], :dataset
-
-      def client
-        @_client ||= @client.dup
-      end
     end
   end
 end
