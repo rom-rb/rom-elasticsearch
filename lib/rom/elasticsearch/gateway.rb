@@ -60,12 +60,6 @@ module ROM
       option :client, default: -> { ::Elasticsearch::Client.new(url: uri, log: log) }
       option :log, default: -> { false }
 
-      # @api private
-      def initialize(*args, **kwargs)
-        super
-        @client = @client.dup
-      end
-
       # Return true if a dataset with the given :index exists
       #
       # @param [Symbol] index The name of the index
