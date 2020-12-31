@@ -1,38 +1,28 @@
 [gem]: https://rubygems.org/gems/rom-elasticsearch
-[travis]: https://travis-ci.org/rom-rb/rom-elasticsearch
-[codeclimate]: https://codeclimate.com/github/rom-rb/rom-elasticsearch
-[inchpages]: http://inch-ci.org/github/rom-rb/rom-elasticsearch
+[actions]: https://github.com/rom-rb/rom-elasticsearch/actions
+[codacy]: https://www.codacy.com/gh/rom-rb/rom-elasticsearch
 [chat]: https://rom-rb.zulipchat.com
+[inchpages]: http://inch-ci.org/github/rom-rb/rom-elasticsearch
 
-# rom-elasticsearch [![Join the chat at https://rom-rb.zulipchat.com](https://img.shields.io/badge/rom--rb-join%20chat-942283.svg)][chat]
+# rom-elasticsearch [![Join the chat at https://rom-rb.zulipchat.com](https://img.shields.io/badge/rom--rb-join%20chat-%23346b7a.svg)][chat]
 
 [![Gem Version](https://badge.fury.io/rb/rom-elasticsearch.svg)][gem]
-[![Build Status](https://travis-ci.org/rom-rb/rom-elasticsearch.svg?branch=master)][travis]
-[![Code Climate](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/gpa.svg)][codeclimate]
-[![Test Coverage](https://codeclimate.com/github/rom-rb/rom-elasticsearch/badges/coverage.svg)][codeclimate]
+[![CI Status](https://github.com/rom-rb/rom-elasticsearch/workflows/ci/badge.svg)][actions]
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9882fd022f904b48b5359b799b59ae88)][codacy]
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/9882fd022f904b48b5359b799b59ae88)][codacy]
 [![Inline docs](http://inch-ci.org/github/rom-rb/rom-elasticsearch.svg?branch=master)][inchpages]
 
-Elasticsearch support for [rom-rb](https://github.com/rom-rb/rom).
+## Links
 
-Resources:
+* [User documentation](http://rom-rb.org/learn/elasticsearch)
+* [API documentation](http://rubydoc.info/gems/rom-elasticsearch)
 
-- [API Documentation](http://rubydoc.info/gems/rom-elasticsearch)
+## Supported Ruby versions
 
-## Installation
+This library officially supports the following Ruby versions:
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'rom-elasticsearch'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install rom-elasticsearch
+* MRI >= `2.5`
+* jruby >= `9.2`
 
 ## License
 
