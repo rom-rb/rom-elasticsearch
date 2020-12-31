@@ -38,8 +38,14 @@ module ROM
     #
     #   posts.like('Hello').first
     #
+    # @example using an existing client
+    #   client = Elasticsearch::Client.new('http://localhost:9200')
+    #   conf = ROM::Configuration.new(:elasticsearch, client: client)
+    #
     # @api public
     class Gateway < ROM::Gateway
+      extend ROM::Initializer
+
       adapter :elasticsearch
 
       # @!attribute [r] url
@@ -50,11 +56,9 @@ module ROM
       #   @return [::Elasticsearch::Client] configured ES client
       attr_reader :client
 
-      # @api private
-      def initialize(uri, log: false)
-        @url = URI.parse(uri)
-        @client = ::Elasticsearch::Client.new(url: url, log: log)
-      end
+      param :uri, default: proc { nil }
+      option :client, default: -> { ::Elasticsearch::Client.new(url: uri, log: log) }
+      option :log, default: -> { false }
 
       # Return true if a dataset with the given :index exists
       #
