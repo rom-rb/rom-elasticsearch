@@ -19,37 +19,54 @@ name: ci
   create: 
 jobs:
   tests:
-  - uses: actions/checkout@v1
-  - name: Install package dependencies
-    run: "[ -e $APT_DEPS ] || sudo apt-get install -y --no-install-recommends $APT_DEPS"
-  - name: Configure sysctl limits
-    run: |
-      sudo swapoff -a
-      sudo sysctl -w vm.swappiness=1
-      sudo sysctl -w fs.file-max=262144
-      sudo sysctl -w vm.max_map_count=262144
-  - name: Runs Elasticsearch
-    uses: elastic/elastic-github-actions/elasticsearch@master
-    with:
-      stack-version: 6.8.2
-  - name: Set up Ruby
-    uses: ruby/setup-ruby@v1
-    with:
-      ruby-version: "${{matrix.ruby}}"
-  - name: Install latest bundler
-    run: |
-      gem install bundler --no-document
-      bundle config set without 'tools benchmarks docs'
-  - name: Bundle install
-    run: bundle install --jobs 4 --retry 3
-  - name: Run all tests
-    run: bundle exec rake
-  - name: Run codacy-coverage-reporter
-    uses: codacy/codacy-coverage-reporter-action@master
-    if: env.COVERAGE == 'true' && env.COVERAGE_TOKEN != ''
-    with:
-      project-token: "${{secrets.CODACY_PROJECT_TOKEN}}"
-      coverage-reports: coverage/coverage.xml
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+        - '3.0'
+        - '2.7'
+        - '2.6'
+        - '2.5'
+        - jruby
+        include:
+        - ruby: '3.0'
+          coverage: 'true'
+    env:
+      COVERAGE: "${{matrix.coverage}}"
+      COVERAGE_TOKEN: "${{secrets.CODACY_PROJECT_TOKEN}}"
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install package dependencies
+      run: "[ -e $APT_DEPS ] || sudo apt-get install -y --no-install-recommends $APT_DEPS"
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "${{matrix.ruby}}"
+    - name: Install latest bundler
+      run: |
+        gem install bundler --no-document
+        bundle config set without 'tools benchmarks docs'
+    - name: Bundle install
+      run: bundle install --jobs 4 --retry 3
+    - name: Run all tests
+      run: bundle exec rake
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@master
+      if: env.COVERAGE == 'true' && env.COVERAGE_TOKEN != ''
+      with:
+        project-token: "${{secrets.CODACY_PROJECT_TOKEN}}"
+        coverage-reports: coverage/coverage.xml
+    - name: Configure sysctl limits
+      run: |
+        sudo swapoff -a
+        sudo sysctl -w vm.swappiness=1
+        sudo sysctl -w fs.file-max=262144
+        sudo sysctl -w vm.max_map_count=262144
+    - name: Runs Elasticsearch
+      uses: elastic/elastic-github-actions/elasticsearch@master
+      with:
+        stack-version: 6.8.2
   release:
     runs-on: ubuntu-latest
     if: contains(github.ref, 'tags') && github.event_name == 'create'
