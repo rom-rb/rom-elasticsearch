@@ -1,10 +1,8 @@
 jobs:
   tests:
     steps:
-    - uses: actions/checkout@v1
-    - name: Install package dependencies
-      run: "[ -e $APT_DEPS ] || sudo apt-get install -y --no-install-recommends $APT_DEPS"
-    - name: Configure sysctl limits
+    - _after: "Checkout"
+      name: Configure sysctl limits
       run: |
         sudo swapoff -a
         sudo sysctl -w vm.swappiness=1
@@ -14,21 +12,3 @@ jobs:
       uses: elastic/elastic-github-actions/elasticsearch@master
       with:
         stack-version: 6.8.2
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: "${{matrix.ruby}}"
-    - name: Install latest bundler
-      run: |
-        gem install bundler --no-document
-        bundle config set without 'tools benchmarks docs'
-    - name: Bundle install
-      run: bundle install --jobs 4 --retry 3
-    - name: Run all tests
-      run: bundle exec rake
-    - name: Run codacy-coverage-reporter
-      uses: codacy/codacy-coverage-reporter-action@master
-      if: env.COVERAGE == 'true' && env.COVERAGE_TOKEN != ''
-      with:
-        project-token: "${{secrets.CODACY_PROJECT_TOKEN}}"
-        coverage-reports: coverage/coverage.xml
