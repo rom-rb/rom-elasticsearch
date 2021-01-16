@@ -3,6 +3,7 @@ begin
 rescue LoadError
 end
 
+require 'support/coverage'
 require 'rom-elasticsearch'
 
 SPEC_ROOT = Pathname(__FILE__).dirname
