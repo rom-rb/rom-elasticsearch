@@ -148,7 +148,7 @@ module ROM
       # @return [self]
       def self.schema(dataset = nil, multi: false, **opts, &block)
         if multi
-          super(IndexName[:_all, multi_index_types], **opts, &block)
+          super(IndexName[:_all], **opts, &block)
         else
           super(dataset, **opts, &block)
         end
@@ -339,7 +339,6 @@ module ROM
       def count
         dataset.client.count(
           index: dataset.index,
-          type: dataset.type,
           body: dataset.body
         )['count']
       end
@@ -381,7 +380,7 @@ module ROM
         { index: name.dataset.to_sym,
           body: {
             settings: self.class.index_settings,
-            mappings: { dataset.type => { properties: schema.to_properties } } } }
+            mappings: { properties: schema.to_properties } } }
       end
     end
   end

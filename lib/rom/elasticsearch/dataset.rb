@@ -96,7 +96,7 @@ module ROM
       #
       # @api public
       def mappings
-        client.indices.get_mapping[index.to_s]['mappings'][type.to_s]
+        client.indices.get_mapping[index.to_s]['mappings']
       end
 
       # Delete everything matching configured params and/or body
