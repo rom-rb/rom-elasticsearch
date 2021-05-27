@@ -12,7 +12,7 @@
 
 - Updated to work with `rom ~> 5.0` (v-kolesnikov)
 
-[Compare v0.3.0...v0.4.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.3.0...v0.4.0)
+[Compare v0.3.0...v0.4.0](https://github.com/rom-rb//compare/v0.3.0...v0.4.0)
 
 ## 0.3.0 2018-03-12
 
@@ -23,7 +23,7 @@
 - Datasets can be configured to include `_metadata` in resulting tuples (solnic)
 
 
-[Compare v0.2.1...v0.3.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.2.1...v0.3.0)
+[Compare v0.2.1...v0.3.0](https://github.com/rom-rb//compare/v0.2.1...v0.3.0)
 
 ## 0.2.1 2018-02-06
 
@@ -33,7 +33,7 @@
 - Using `read` types in schemas no longer breaks indexing (solnic)
 
 
-[Compare v0.2.0...v0.2.1](https://github.com/rom-rb/rom-elasticsearch/compare/v0.2.0...v0.2.1)
+[Compare v0.2.0...v0.2.1](https://github.com/rom-rb//compare/v0.2.0...v0.2.1)
 
 ## 0.2.0 2018-01-23
 
@@ -46,7 +46,7 @@
 - `Relation#call` returns custom `ROM::Elasticsearch::Relation::Loaded` object, which provides access to `#total_hits` and raw client response (solnic)
 
 
-[Compare v0.1.1...v0.2.0](https://github.com/rom-rb/rom-elasticsearch/compare/v0.1.1...v0.2.0)
+[Compare v0.1.1...v0.2.0](https://github.com/rom-rb//compare/v0.1.1...v0.2.0)
 
 ## 0.1.1 2017-11-18
 
@@ -55,7 +55,7 @@
 
 - Connection URI is passed directly to the ES client now (solnic)
 
-[Compare v0.1.0...v0.1.1](https://github.com/rom-rb/rom-elasticsearch/compare/v0.1.0...v0.1.1)
+[Compare v0.1.0...v0.1.1](https://github.com/rom-rb//compare/v0.1.0...v0.1.1)
 
 ## 0.1.0 2017-11-17
 
