@@ -1,4 +1,4 @@
-# this file is managed by rom-rb/devtools project
+# This file is synced from rom-rb/template-gem repo
 
 name: sync
 
@@ -28,17 +28,11 @@ jobs:
           git config --local user.email "rom-bot@rom-rb.org"
           git config --local user.name "rom-bot"
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: "2.6"
       - name: Install dependencies
         run: gem install ossy --no-document
-      - name: Compile file templates
-        run: tmp/devtools/bin/compile-templates
-      - name: Update workflow files from devtools
-        run: tmp/devtools/bin/sync-workflows
-      - name: Update configuration files from devtools
-        run: tmp/devtools/bin/sync-shared-files
       - name: Update changelog.yml from commit
         run: tmp/devtools/bin/update-changelog-from-commit $GITHUB_SHA
       - name: Compile CHANGELOG.md
