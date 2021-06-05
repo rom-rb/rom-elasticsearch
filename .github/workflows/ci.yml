@@ -67,7 +67,7 @@ jobs:
         uses: codacy/codacy-coverage-reporter-action@master
         if: env.COVERAGE == 'true' && env.COVERAGE_TOKEN != ''
         with:
-          project-token: ${{ secrets.GH_PAT }}
+          project-token: ${{ env.COVERAGE_TOKEN }}
           coverage-reports: coverage/coverage.xml
   release:
     runs-on: ubuntu-latest
