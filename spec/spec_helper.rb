@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 begin
-  require 'byebug'
+  require "byebug"
 rescue LoadError
 end
 
-require 'support/coverage'
-require 'rom-elasticsearch'
+require "support/coverage"
+require "rom-elasticsearch"
 
 SPEC_ROOT = Pathname(__FILE__).dirname
 
-Dir[SPEC_ROOT.join('shared/**/*.rb')].each { |f| require f }
+Dir[SPEC_ROOT.join("shared/**/*.rb")].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.disable_monkey_patching!

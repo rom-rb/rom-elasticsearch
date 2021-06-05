@@ -1,11 +1,13 @@
-RSpec.describe ROM::Elasticsearch::Dataset, '#delete' do
+# frozen_string_literal: true
+
+RSpec.describe ROM::Elasticsearch::Dataset, "#delete" do
   subject(:dataset) do
-    ROM::Elasticsearch::Dataset.new(client, params: { index: :users })
+    ROM::Elasticsearch::Dataset.new(client, params: {index: :users})
   end
 
-  include_context 'user fixtures'
+  include_context "user fixtures"
 
-  it 'deletes data' do
+  it "deletes data" do
     expect(dataset.to_a.size).to eql(3)
 
     dataset.refresh.delete

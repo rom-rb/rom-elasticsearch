@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'rom/relation'
+require "rom/relation"
 
-require 'rom/elasticsearch/index_name'
-require 'rom/elasticsearch/relation/loaded'
-require 'rom/elasticsearch/types'
-require 'rom/elasticsearch/schema'
-require 'rom/elasticsearch/attribute'
+require "rom/elasticsearch/index_name"
+require "rom/elasticsearch/relation/loaded"
+require "rom/elasticsearch/types"
+require "rom/elasticsearch/schema"
+require "rom/elasticsearch/attribute"
 
 module ROM
   module Elasticsearch
@@ -130,17 +130,17 @@ module ROM
 
       # Default index settings that can be overridden
       index_settings(
-        { number_of_shards: 1,
-          index: {
-            analysis: {
-              analyzer: {
-                standard_stopwords: {
-                  type: "standard",
-                  stopwords: "_english_"
-                }
-              }
-            }
-          } }.freeze
+        {number_of_shards: 1,
+         index: {
+           analysis: {
+             analyzer: {
+               standard_stopwords: {
+                 type: "standard",
+                 stopwords: "_english_"
+               }
+             }
+           }
+         }}.freeze
       )
 
       # Define a schema for the relation
@@ -340,7 +340,7 @@ module ROM
         dataset.client.count(
           index: dataset.index,
           body: dataset.body
-        )['count']
+        )["count"]
       end
 
       # Restrict relation data by offset
@@ -377,10 +377,11 @@ module ROM
       #
       # @api private
       def index_params
-        { index: name.dataset.to_sym,
-          body: {
-            settings: self.class.index_settings,
-            mappings: { properties: schema.to_properties } } }
+        {index: name.dataset.to_sym,
+         body: {
+           settings: self.class.index_settings,
+           mappings: {properties: schema.to_properties}
+         }}
       end
     end
   end

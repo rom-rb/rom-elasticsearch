@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'elasticsearch'
-require 'uri'
+require "elasticsearch"
+require "uri"
 
-require 'rom/gateway'
-require 'rom/support/inflector'
-require 'rom/elasticsearch/dataset'
-require 'rom/elasticsearch/index_name'
+require "rom/gateway"
+require "rom/support/inflector"
+require "rom/elasticsearch/dataset"
+require "rom/elasticsearch/index_name"
 
 module ROM
   module Elasticsearch
@@ -56,7 +56,7 @@ module ROM
       #   @return [::Elasticsearch::Client] configured ES client
       attr_reader :client
 
-      param :uri, default: proc { nil }
+      param :uri, default: proc {}
       option :client, default: -> { ::Elasticsearch::Client.new(url: uri, log: log) }
       option :log, default: -> { false }
 
@@ -81,7 +81,7 @@ module ROM
       # @api public
       def dataset(index)
         idx_name = IndexName[index]
-        Dataset.new(client, params: { index: idx_name.to_sym })
+        Dataset.new(client, params: {index: idx_name.to_sym})
       end
       alias_method :[], :dataset
     end

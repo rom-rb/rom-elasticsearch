@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rom/initializer'
+require "rom/initializer"
 
-require 'rom/elasticsearch/query_methods'
-require 'rom/elasticsearch/scroll_methods'
-require 'rom/elasticsearch/errors'
+require "rom/elasticsearch/query_methods"
+require "rom/elasticsearch/scroll_methods"
+require "rom/elasticsearch/errors"
 
 module ROM
   module Elasticsearch
@@ -25,13 +25,13 @@ module ROM
       include ScrollMethods
 
       # Sort values separator
-      SORT_VALUES_SEPARATOR = ','.freeze
+      SORT_VALUES_SEPARATOR = ","
 
       # Default query options
-      ALL = { query: { match_all: EMPTY_HASH } }.freeze
+      ALL = {query: {match_all: EMPTY_HASH}}.freeze
 
       # The source key in raw results
-      SOURCE_KEY = '_source'.freeze
+      SOURCE_KEY = "_source"
 
       # @!attribute [r] client
       #   @return [::Elasticsearch::Client] configured client from the gateway
@@ -87,7 +87,7 @@ module ROM
       #
       # @api public
       def settings
-        client.indices.get_settings[index.to_s]['settings']['index']
+        client.indices.get_settings[index.to_s]["settings"]["index"]
       end
 
       # Return index mappings
@@ -96,7 +96,7 @@ module ROM
       #
       # @api public
       def mappings
-        client.indices.get_mapping[index.to_s]['mappings']
+        client.indices.get_mapping[index.to_s]["mappings"]
       end
 
       # Delete everything matching configured params and/or body
@@ -134,6 +134,7 @@ module ROM
       # @api public
       def each
         return to_enum unless block_given?
+
         view.each { |result| yield(tuple_proc[result]) }
       rescue ::Elasticsearch::Transport::Transport::Error => e
         raise SearchError.new(e, options)
@@ -283,7 +284,7 @@ module ROM
         elsif params[:scroll]
           scroll_enumerator(client, response)
         else
-          response.fetch('hits').fetch('hits')
+          response.fetch("hits").fetch("hits")
         end
       end
 

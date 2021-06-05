@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rom/global'
-require 'elasticsearch/dsl'
+require "rom/global"
+require "elasticsearch/dsl"
 
 module ROM
   module Elasticsearch

@@ -23,13 +23,13 @@ module ROM
       def scroll_enumerator(client, response)
         Enumerator.new do |yielder|
           loop do
-            hits = response.fetch('hits').fetch('hits')
+            hits = response.fetch("hits").fetch("hits")
             break if hits.empty?
 
             hits.each { |result| yielder.yield(result) }
 
             response = client.scroll(
-              scroll_id: response.fetch('_scroll_id'),
+              scroll_id: response.fetch("_scroll_id"),
               scroll: params[:scroll]
             )
           end
