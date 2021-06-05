@@ -36,7 +36,7 @@ jobs:
           - ruby: "3.0"
             coverage: "true"
     env:
-      COVERAGE: true
+      COVERAGE: ${{ matrix.ruby == '3.0' }}
       COVERAGE_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
     steps:
       - name: Checkout
