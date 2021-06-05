@@ -18,6 +18,7 @@ RSpec.configure do |config|
   # elasticsearch-dsl warnings are killing me - solnic
   config.warnings = false
 
+  # rubocop:disable Lint/ConstantDefinitionInBlock
   config.before do
     module Test
     end
@@ -26,4 +27,5 @@ RSpec.configure do |config|
   config.after do
     Object.send(:remove_const, :Test)
   end
+  # rubocop:enable Lint/ConstantDefinitionInBlock
 end
