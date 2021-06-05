@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - ".github/workflows/ci.yml"
+      - "docker-compose.yml"
       - "lib/**"
       - "*.gemspec"
       - "spec/**"
