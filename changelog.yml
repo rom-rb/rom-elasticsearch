@@ -1,11 +1,11 @@
 ---
-- version: unreleased
-  summary: 
-  date: 
-  fixed: 
-  added: 
+- version: 0.5.0
+  summary:
+  date: '2021-06-05'
+  fixed:
+  added:
   changed:
-  - 'Upgrade to elasticsearch ~ 7.x (via #25) (@demsullivan)'
+  - 'Upgrade to elasticsearch ~> 7.13 (via #25) (@demsullivan + @solnic)'
 - version: 0.4.0
   date: '2019-04-28'
   added:
