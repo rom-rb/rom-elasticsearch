@@ -26,7 +26,11 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-
+          - "3.0"
+          - "2.7"
+          - "2.6"
+          - "2.5"
+          - "jruby"
         include:
           - ruby: "3.0"
             coverage: "true"
@@ -36,8 +40,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Install package dependencies
-        run: "[ -e $APT_DEPS ] || sudo apt-get install -y --no-install-recommends $APT_DEPS"
       - name: Start Elasticsearch
         run: docker-compose up -d elasticsearch
       - name: Set up Ruby
