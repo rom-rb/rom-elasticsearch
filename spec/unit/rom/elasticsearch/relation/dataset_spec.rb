@@ -18,10 +18,6 @@ RSpec.describe ROM::Elasticsearch::Relation, '#dataset' do
     it 'sets up correct index name' do
       expect(relation.dataset.index).to eql(:users)
     end
-
-    it 'sets up default index type' do
-      expect(relation.dataset.type).to eql(:user)
-    end
   end
 
   context 'overridding default dataset object' do

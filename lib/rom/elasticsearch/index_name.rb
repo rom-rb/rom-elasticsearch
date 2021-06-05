@@ -9,27 +9,18 @@ module ROM
       # @api private
       attr_reader :name
 
-      # @api private
-      attr_reader :types
-
-      def self.[](name, types = nil)
+      def self.[](name)
         if name.is_a?(self)
           name
         else
-          new(name, types)
+          new(name)
         end
       end
 
       # @api private
-      def initialize(name, types = nil)
+      def initialize(name)
         @name = name
-        @types = types
         freeze
-      end
-
-      # @api private
-      def type
-        types ? Array(types).join(',') : Inflector.singularize(name).to_sym
       end
 
       # @api private
@@ -37,6 +28,5 @@ module ROM
         name
       end
     end
-
   end
 end

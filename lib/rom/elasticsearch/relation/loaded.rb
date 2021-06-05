@@ -13,7 +13,7 @@ module ROM
         #
         # @api public
         def total_hits
-          response['hits']['total']
+          response['hits']['total']['value']
         end
 
         # Return raw response from the ES client
