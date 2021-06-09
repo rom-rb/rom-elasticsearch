@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rom/types'
+require "rom/types"
 
 module ROM
   module Elasticsearch
@@ -19,7 +19,7 @@ module ROM
       #
       # @api public
       def self.Keyword(meta = {})
-        String.meta(type: 'keyword', **meta)
+        String.meta(type: "keyword", **meta)
       end
 
       # Define a keyword attribute type
@@ -28,7 +28,7 @@ module ROM
       #
       # @api public
       def self.Text(meta = {})
-        String.meta(type: 'text', **meta)
+        String.meta(type: "text", **meta)
       end
     end
   end

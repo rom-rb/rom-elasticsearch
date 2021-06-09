@@ -1,7 +1,9 @@
-RSpec.describe ROM::Elasticsearch::Relation, '.schema' do
+# frozen_string_literal: true
+
+RSpec.describe ROM::Elasticsearch::Relation, ".schema" do
   subject(:relation) { relations[:users] }
 
-  include_context 'setup'
+  include_context "setup"
 
   before do
     conf.relation(:users) do
@@ -12,10 +14,10 @@ RSpec.describe ROM::Elasticsearch::Relation, '.schema' do
     end
   end
 
-  it 'defines read/write types' do
+  it "defines read/write types" do
     relation.create_index
 
-    relation.command(:create).call(id: 1, name: 'Jane')
+    relation.command(:create).call(id: 1, name: "Jane")
 
     user = relation.get(1).one
 

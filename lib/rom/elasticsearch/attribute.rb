@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rom/attribute'
+require "rom/attribute"
 
 module ROM
   module Elasticsearch
@@ -9,7 +9,7 @@ module ROM
     # @api public
     class Attribute < ROM::Attribute
       INTERNAL_META_KEYS = %i[name source primary_key read].freeze
-      DEFAULT_SORT_DIRECTION = 'asc'.freeze
+      DEFAULT_SORT_DIRECTION = "asc"
 
       # Return ES mapping properties
       #
@@ -26,7 +26,7 @@ module ROM
       #
       # @api public
       def properties?
-        properties.size > 0
+        properties.size.positive?
       end
 
       # Return attribute with direction set to ascending
@@ -35,7 +35,7 @@ module ROM
       #
       # @api public
       def asc
-        meta(direction: 'asc')
+        meta(direction: "asc")
       end
 
       # Return attribute with direction set to descending
@@ -44,7 +44,7 @@ module ROM
       #
       # @api public
       def desc
-        meta(direction: 'desc')
+        meta(direction: "desc")
       end
 
       # @api private

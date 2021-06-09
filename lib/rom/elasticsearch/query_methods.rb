@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rom/elasticsearch/errors'
+require "rom/elasticsearch/errors"
 
 module ROM
   module Elasticsearch
@@ -46,7 +46,7 @@ module ROM
       #
       # @api public
       def query_string(expression)
-        query(query_string: { query: expression })
+        query(query_string: {query: expression})
       end
 
       # Return a new dataset configured to search via :query body option

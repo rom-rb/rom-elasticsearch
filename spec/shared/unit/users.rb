@@ -1,5 +1,7 @@
-RSpec.shared_context 'users' do
-  include_context 'setup'
+# frozen_string_literal: true
+
+RSpec.shared_context "users" do
+  include_context "setup"
 
   before do
     conf.relation(:users) do
