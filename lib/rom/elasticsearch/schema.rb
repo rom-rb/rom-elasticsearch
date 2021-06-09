@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'rom/types'
-require 'rom/schema'
+require "rom/types"
+require "rom/schema"
 
 module ROM
   module Elasticsearch

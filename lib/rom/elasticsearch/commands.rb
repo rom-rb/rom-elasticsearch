@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rom/commands'
+require "rom/commands"
 
 module ROM
   module Elasticsearch
@@ -22,7 +22,7 @@ module ROM
             else
               dataset.put(tuple)
             end
-          [relation.get(result['_id']).one]
+          [relation.get(result["_id"]).one]
         end
 
         private
