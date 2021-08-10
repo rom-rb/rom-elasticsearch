@@ -74,5 +74,66 @@ RSpec.describe ROM::Elasticsearch::Relation, "#create_index" do
                   })
       end
     end
+
+    context "with a nested attribute type" do
+      before do
+        conf.relation(:users) do
+          schema do
+            attribute :id, ROM::Elasticsearch::Types::ID
+            attribute :name, ROM::Elasticsearch::Types.Keyword
+            attribute :profile, ROM::Elasticsearch::Types.Nested do
+              attribute :email, ROM::Elasticsearch::Types.Text
+            end
+          end
+        end
+      end
+
+      it "creates an index" do
+        relation.create_index
+
+        expect(gateway.index?(:users)).to be(true)
+
+        expect(relation.dataset.mappings)
+          .to eql("properties" => {
+                    "name" => {"type" => "keyword"},
+                    "profile" => {
+                      "type" => "nested",
+                      "properties" => {
+                        "email" => {"type" => "text"}
+                      }
+                    }
+                  })
+      end
+    end
+
+    context "with an object attribute type" do
+      before do
+        conf.relation(:users) do
+          schema do
+            attribute :id, ROM::Elasticsearch::Types::ID
+            attribute :name, ROM::Elasticsearch::Types.Keyword
+            attribute :profile, ROM::Elasticsearch::Types.Object do
+              attribute :email, ROM::Elasticsearch::Types.Text
+            end
+          end
+        end
+      end
+
+      it "creates an index" do
+        relation.create_index
+        
+        expect(gateway.index?(:users)).to be(true)
+
+        expect(relation.dataset.mappings)
+        .to eql("properties" => {
+          "name" => {"type" => "keyword"},
+          "profile" => {
+            "properties" => {
+              "email" => {"type" => "text"}
+            }
+          }
+        })
+      end
+    end
   end
 end
