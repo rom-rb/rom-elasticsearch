@@ -379,10 +379,11 @@ module ROM
       #
       # @api private
       def index_params
-        { index: name.dataset.to_sym,
-          body: {
-            settings: self.class.index_settings,
-            mappings: { properties: schema.to_properties } } }
+        {index: name.dataset.to_sym,
+         body: {
+           settings: self.class.index_settings,
+           mappings: {properties: schema.to_properties}
+         }}
       end
     end
   end

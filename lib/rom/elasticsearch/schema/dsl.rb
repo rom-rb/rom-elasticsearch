@@ -7,7 +7,6 @@ module ROM
   module Elasticsearch
     class Schema
       class DSL < ROM::Schema::DSL
-
         # Defines a relation attribute with its type and options.
         #
         # Optionally, accepts a block to define nested attributes
@@ -17,11 +16,11 @@ module ROM
         #
         # @api public
         def attribute(name, type_or_options, options = EMPTY_HASH, &block)
-          if !block.nil?
-            if !type_or_options.is_a?(::Dry::Types::Hash)
-              raise ROM::Elasticsearch::InvalidAttributeError, 
-                "You can only specify an attribute block on an object or nested field! " \
-                "Attribute #{name} is a #{type_or_options.name}"
+          unless block.nil?
+            unless type_or_options.is_a?(::Dry::Types::Hash)
+              raise ROM::Elasticsearch::InvalidAttributeError,
+                    "You can only specify an attribute block on an object or nested field! " \
+                    "Attribute #{name} is a #{type_or_options.name}"
             end
 
             nested_schema = self.class.new(
@@ -36,7 +35,7 @@ module ROM
           end
 
           super(
-            name, 
+            name,
             type_or_options,
             options
           )

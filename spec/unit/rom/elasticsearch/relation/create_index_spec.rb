@@ -121,18 +121,18 @@ RSpec.describe ROM::Elasticsearch::Relation, "#create_index" do
 
       it "creates an index" do
         relation.create_index
-        
+
         expect(gateway.index?(:users)).to be(true)
 
         expect(relation.dataset.mappings)
-        .to eql("properties" => {
-          "name" => {"type" => "keyword"},
-          "profile" => {
-            "properties" => {
-              "email" => {"type" => "text"}
-            }
-          }
-        })
+          .to eql("properties" => {
+                    "name" => {"type" => "keyword"},
+                    "profile" => {
+                      "properties" => {
+                        "email" => {"type" => "text"}
+                      }
+                    }
+                  })
       end
     end
   end

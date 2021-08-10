@@ -44,7 +44,7 @@ RSpec.describe ROM::Elasticsearch::Relation, ".schema" do
       relation.create_index
 
       relation.command(:create).call(
-        id:   1,
+        id: 1,
         name: "Jane",
         profile: {
           email: "jane@sample.com"
@@ -54,7 +54,7 @@ RSpec.describe ROM::Elasticsearch::Relation, ".schema" do
       user = relation.get(1).one
 
       expect(user[:id]).to be(1)
-      expect(user[:profile]).to eql({ "email" => "jane@sample.com" })
+      expect(user[:profile]).to eql({"email" => "jane@sample.com"})
     end
   end
 end

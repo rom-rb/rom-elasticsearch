@@ -2,7 +2,7 @@
 
 RSpec.describe ROM::Elasticsearch::Dataset, "#delete" do
   subject(:dataset) do
-    ROM::Elasticsearch::Dataset.new(client, params: { index: :users })
+    ROM::Elasticsearch::Dataset.new(client, params: {index: :users})
   end
 
   include_context "user fixtures"

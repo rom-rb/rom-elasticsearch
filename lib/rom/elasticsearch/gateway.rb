@@ -81,7 +81,7 @@ module ROM
       # @api public
       def dataset(index)
         idx_name = IndexName[index]
-        Dataset.new(client, params: { index: idx_name.to_sym })
+        Dataset.new(client, params: {index: idx_name.to_sym})
       end
       alias_method :[], :dataset
     end
