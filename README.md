@@ -8,9 +8,9 @@
 
 [![Gem Version](https://badge.fury.io/rb/rom-elasticsearch.svg)][gem]
 [![CI Status](https://github.com/rom-rb/rom-elasticsearch/workflows/ci/badge.svg)][actions]
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9882fd022f904b48b5359b799b59ae88)][codacy]
+[![RuboCop](https://github.com/rom-rb/rom-elasticsearch/actions/workflows/rubocop.yml/badge.svg)](https://github.com/rom-rb/rom-elasticsearch/actions/workflows/rubocop.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/9882fd022f904b48b5359b799b59ae88)][codacy]
-[![Inline docs](http://inch-ci.org/github/rom-rb/rom-elasticsearch.svg?branch=master)][inchpages]
+[![Inline docs](http://inch-ci.org/github/rom-rb/rom-elasticsearch.svg?branch=main)][inchpages]
 
 ## Links
 
