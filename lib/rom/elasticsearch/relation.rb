@@ -6,6 +6,7 @@ require "rom/elasticsearch/index_name"
 require "rom/elasticsearch/relation/loaded"
 require "rom/elasticsearch/types"
 require "rom/elasticsearch/schema"
+require "rom/elasticsearch/schema/dsl"
 require "rom/elasticsearch/attribute"
 
 module ROM
@@ -113,6 +114,7 @@ module ROM
       #       end
       defines :multi_index_types
 
+      schema_dsl Elasticsearch::Schema::DSL
       schema_class Elasticsearch::Schema
       schema_attr_class Elasticsearch::Attribute
 

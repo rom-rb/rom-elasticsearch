@@ -6,8 +6,8 @@ RSpec.shared_context "users" do
   before do
     conf.relation(:users) do
       schema(:users) do
-        attribute :id, ROM::Types::Integer
-        attribute :name, ROM::Types::String
+        attribute :id, ROM::Elasticsearch::Types::ID
+        attribute :name, ROM::Elasticsearch::Types.Text
 
         primary_key :id
       end

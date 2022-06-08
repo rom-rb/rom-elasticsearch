@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rom/types"
+require "rom/elasticsearch/schema"
 
 module ROM
   module Elasticsearch
@@ -29,6 +30,24 @@ module ROM
       # @api public
       def self.Text(meta = {})
         String.meta(type: "text", **meta)
+      end
+
+      # Define a nested attribute type
+      #
+      # @return [Dry::Types::Type]
+      #
+      # @api public
+      def self.Nested(meta = {})
+        Hash.meta(type: "nested", **meta)
+      end
+
+      # Define an object attribute type
+      #
+      # @return [Dry::Types::Type]
+      #
+      # @api public
+      def self.Object(meta = {})
+        Hash.meta(properties: {}, **meta)
       end
     end
   end
